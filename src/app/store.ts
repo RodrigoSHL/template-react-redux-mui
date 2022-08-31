@@ -1,11 +1,13 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
-import darkModeReducer from '../features/thematic/darkModeSlice';
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import counterReducer from "../features/counter/counterSlice";
+import darkModeReducer from "../features/thematic/darkModeSlice";
+import snackbarReducer from "../features/snackbar/snackbarSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     darkMode: darkModeReducer,
+    snackbar: snackbarReducer,
   },
 });
 
