@@ -13,7 +13,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
@@ -21,6 +20,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import ToggleSwitch from "./ToggleSwitch";
 import Navigation from "../../routes/Navigation";
 import { useNavigate } from "react-router-dom";
+import AdbIcon from '@mui/icons-material/Adb';
+import CircleOptions from "./CircleOptions";
 
 const drawerWidth = 240;
 
@@ -98,6 +99,7 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -115,6 +117,11 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
       text: "Test",
       icon: <MailIcon />,
       onClick: () => navigate("/test"),
+    },
+    {
+      text: "Pokeapi",
+      icon: <MailIcon />,
+      onClick: () => navigate("/pokeapi"),
     },
   ];
   return (
@@ -134,10 +141,17 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+          <AdbIcon sx={{ display: { md: "flex" }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, marginLeft: 1 }}
+          >
+            LOGO
           </Typography>
           <ToggleSwitch />
+          <CircleOptions/>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
