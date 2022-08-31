@@ -1,4 +1,4 @@
-import { FormControlLabel, FormGroup, Switch } from "@mui/material";
+import { Switch } from "@mui/material";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { toggleTheme } from "../../features/thematic/darkModeSlice";
@@ -12,22 +12,14 @@ const ToggleSwitch = () => {
   return (
     <div
       style={{
-        position: "absolute",
         top: "10px",
         right: "10px",
       }}
     >
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={theme.darkTheme}
-              onChange={() => dispatch(toggleTheme())}
-            />
-          }
-          label="Toggle Theme"
-        />
-      </FormGroup>
+      <Switch
+        checked={theme.darkTheme}
+        onChange={() => dispatch(toggleTheme())}
+      />
     </div>
   );
 };
