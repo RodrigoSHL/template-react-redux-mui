@@ -18,11 +18,12 @@ import ListItemText from "@mui/material/ListItemText";
 import ToggleSwitch from "./ToggleSwitch";
 import Navigation from "../../routes/Navigation";
 import { useNavigate } from "react-router-dom";
-import AdbIcon from '@mui/icons-material/Adb';
+import AdbIcon from "@mui/icons-material/Adb";
 import CircleOptions from "./CircleOptions";
-import AvTimerIcon from '@mui/icons-material/AvTimer';
-import BugReportIcon from '@mui/icons-material/BugReport';
-import AppleIcon from '@mui/icons-material/Apple';
+import AvTimerIcon from "@mui/icons-material/AvTimer";
+import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
+import AppleIcon from "@mui/icons-material/Apple";
+import AppsIcon from '@mui/icons-material/Apps';
 
 const drawerWidth = 240;
 
@@ -100,7 +101,6 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -121,8 +121,13 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
     },
     {
       text: "Pokeapi",
-      icon: <BugReportIcon />,
+      icon: <CatchingPokemonIcon />,
       onClick: () => navigate("/pokeapi"),
+    },
+    {
+      text: "Crud",
+      icon: <AppsIcon />,
+      onClick: () => navigate("/crud"),
     },
   ];
   return (
@@ -152,7 +157,7 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
             LOGO
           </Typography>
           <ToggleSwitch />
-          <CircleOptions/>
+          <CircleOptions />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
