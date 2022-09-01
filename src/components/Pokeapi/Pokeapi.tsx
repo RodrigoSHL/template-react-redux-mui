@@ -1,54 +1,108 @@
-import React, { useState } from "react";
 import {
-  Alert,
-  AlertProps,
+  Avatar,
   Box,
   Button,
   Container,
-  Snackbar,
+  Grid,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
   Stack,
 } from "@mui/material";
 import styles from "./Pokeapi.module.css";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  getAllPokeapi,
+  getNextPokeapi,
+  getPrevPokeapi,
+  getInfoPokeapi,
+  selectPokeapi,
+} from "../../features/pokeapi/pokeapiSlice";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
+import Detail from "./Detail";
 
+interface IPokemon {
+  name: string;
+  url: string;
+}
 const Pokeapi = () => {
-  const [snackbar, setSnackbar] = useState<Pick<AlertProps,"children" | "severity"> | null>(null);
+  const dispatch = useAppDispatch();
+  const { results: POKEMONS } = useAppSelector(selectPokeapi);
+  const { next } = useAppSelector(selectPokeapi);
+  const { previous } = useAppSelector(selectPokeapi);
 
-  const handleCloseSnackbar = () => setSnackbar(null);
-
-  const openSuccessSnack = () => {
-    setSnackbar({
-      children: "Success Snackbar",
-      severity: "success",
-    });
-  };
-
-  const openErrorSnack = () => {
-    setSnackbar({
-      children: "Error Snackbar",
-      severity: "error",
-    });
-  };
   return (
     <>
       <Container maxWidth="lg">
         <Box className={styles.container}>
           <Box component="main" className={styles.containerTable}>
-            <h1>Pokeapi</h1>
+            <h2>Pokemon's List</h2>
             <Stack direction="row" spacing={2}>
-              <Button variant="contained" onClick={openSuccessSnack}>
-                Success
-              </Button>
-              <Button variant="contained" onClick={openErrorSnack}>
-                Error
-              </Button>
+              {POKEMONS.length === 0 && (
+                <Button
+                  variant="outlined"
+                  onClick={() => dispatch(getAllPokeapi())}
+                >
+                  Get Pokemon
+                </Button>
+              )}
+              {previous && (
+                <Button
+                  variant="outlined"
+                  onClick={() => dispatch(getPrevPokeapi())}
+                >
+                  Previous
+                </Button>
+              )}
+              {next && (
+                <Button
+                  variant="contained"
+                  onClick={() => dispatch(getNextPokeapi())}
+                >
+                  Next
+                </Button>
+              )}
             </Stack>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <List>
+                  {POKEMONS.map((pokemon: IPokemon, index: number) => {
+                    return (
+                      <ListItem
+                        secondaryAction={
+                          <Button
+                            variant="outlined"
+                            startIcon={<VisibilityIcon />}
+                            onClick={()=> {dispatch(getInfoPokeapi(pokemon.url))}}
+                          >
+                            Details
+                          </Button>
+                        }
+                      >
+                        <ListItemAvatar>
+                          <Avatar>
+                            <CatchingPokemonIcon />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                          className={styles.upper}
+                          key={index}
+                          primary={pokemon.name}
+                          secondary={"N°" + pokemon.url.split("/")[6]}
+                        />
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Detail/>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
-        {!!snackbar && (
-          <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={3000}>
-            <Alert {...snackbar} onClose={handleCloseSnackbar} />
-          </Snackbar>
-        )}
       </Container>
     </>
   );
