@@ -20,15 +20,13 @@ const TestComponent = () => {
 
   const openSuccessSnack = () => {
     setSnackbar({
-      children: "Success Snackbar",
-      severity: "success",
+      children: "Success Snackbar", severity: "success",
     });
   };
 
   const openErrorSnack = () => {
     setSnackbar({
-      children: "Error Snackbar",
-      severity: "error",
+      children: "Error Snackbar", severity: "error",
     });
   };
 
@@ -39,8 +37,8 @@ const TestComponent = () => {
           <Box component="main" className={styles.containerTable}>
             <h1>Testing</h1>
             <Stack direction="row" spacing={2}>
-              <Button variant="contained" onClick={openSuccessSnack}>Success</Button>
-              <Button variant="contained" onClick={openErrorSnack}>Error</Button>
+              <Button variant="contained" color="success" onClick={openSuccessSnack}>Success</Button>
+              <Button variant="contained" color="error" onClick={openErrorSnack}>Error</Button>
               <Button variant="contained" disabled>
                 Disabled
               </Button>
