@@ -11,6 +11,7 @@ const Navigation = () => {
         <Route path="/counter" element={<Counter />} />
         <Route path="/test" element={<TestComponent />} />
         <Route path="/pokeapi" element={<Pokeapi />} />
+        <Route path="/" element={<TestComponent />} />
       </Routes>
     </>
   );
