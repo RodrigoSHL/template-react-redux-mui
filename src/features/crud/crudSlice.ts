@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { initialStateCrud } from "../../app/initialVariable";
+import { RootState } from "../../app/store";
 import { types } from "../../app/types";
 
 export const crudSlice = createSlice({
@@ -8,13 +9,13 @@ export const crudSlice = createSlice({
   initialState: {...initialStateCrud},
   reducers: {
     getAll: (state: any = initialStateCrud,action: PayloadAction<any>) => {
-        return {...state, ...action.payload}
+        return {...state, results: action.payload}
     },
   },
 });
 
 //Action
-export const { getAll} = crudSlice.actions;
+export const { getAll } = crudSlice.actions;
 
 
 //Business
@@ -28,6 +29,10 @@ export const findAll = () => async (dispatch: any) => {
         console.log(error);
       });
   };
+
+
+//State-Reducer
+export const selectCrud = (state: RootState) => state.crud;
 
 
 // Reducer
