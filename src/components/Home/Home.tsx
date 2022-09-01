@@ -15,13 +15,14 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import ToggleSwitch from "./ToggleSwitch";
 import Navigation from "../../routes/Navigation";
 import { useNavigate } from "react-router-dom";
 import AdbIcon from '@mui/icons-material/Adb';
 import CircleOptions from "./CircleOptions";
+import AvTimerIcon from '@mui/icons-material/AvTimer';
+import BugReportIcon from '@mui/icons-material/BugReport';
+import AppleIcon from '@mui/icons-material/Apple';
 
 const drawerWidth = 240;
 
@@ -110,17 +111,17 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
   const itemsList = [
     {
       text: "Counter",
-      icon: <InboxIcon />,
+      icon: <AvTimerIcon />,
       onClick: () => navigate("/counter"),
     },
     {
       text: "Test",
-      icon: <MailIcon />,
+      icon: <AppleIcon />,
       onClick: () => navigate("/test"),
     },
     {
       text: "Pokeapi",
-      icon: <MailIcon />,
+      icon: <BugReportIcon />,
       onClick: () => navigate("/pokeapi"),
     },
   ];
