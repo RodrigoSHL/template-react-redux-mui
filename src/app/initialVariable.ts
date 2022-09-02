@@ -13,7 +13,8 @@ const Pokemon:IPokemonInfo = {name:'',weight:0,height:0,sprites:'',types:[]}
 
 /* Pokeapi */
 export const initialStateCrud = {
-  results: []
+  results: [],
+  pokemon: {}
 };
 
 /* Pokeapi */
