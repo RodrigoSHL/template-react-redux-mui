@@ -24,6 +24,7 @@ import AvTimerIcon from "@mui/icons-material/AvTimer";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
 import AppleIcon from "@mui/icons-material/Apple";
 import AppsIcon from '@mui/icons-material/Apps';
+import Snackbar from "../Middleware/Snackbar";
 
 const drawerWidth = 240;
 
@@ -187,6 +188,7 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Navigation />
+        <Snackbar/>
       </Box>
     </Box>
   );
