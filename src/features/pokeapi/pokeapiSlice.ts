@@ -3,6 +3,7 @@ import axios from "axios";
 import { initialStatePokeapi } from "../../app/initialVariable";
 import { RootState } from "../../app/store";
 import { types } from "../../app/types";
+import { IPokemonInfo } from "../../interfaces/IPokemonInfo.interface";
 
 export const pokeapiSlice = createSlice({
   name: types.pokeapiType,
@@ -62,7 +63,7 @@ export const getPrevPokeapi = () => async (dispatch: any, getState:any) => {
 export const getInfoPokeapi = (url:string='https://pokeapi.co/api/v2/pokemon/1') => async (dispatch: any) => {
 
   await axios
-    .get(url)
+    .get<IPokemonInfo>(url)
     .then((response) => {
       const arrTypes: string[] = [];
       response.data.types.forEach((type:any) => arrTypes.push(type.type.name));
@@ -70,7 +71,7 @@ export const getInfoPokeapi = (url:string='https://pokeapi.co/api/v2/pokemon/1')
         name: response.data.name,
         weight: response.data.weight,
         height: response.data.height,
-        sprites: response.data.sprites.front_default,
+        sprites: response.data.sprites.other?.["official-artwork"].front_default,
         types: arrTypes
       }));
     })
