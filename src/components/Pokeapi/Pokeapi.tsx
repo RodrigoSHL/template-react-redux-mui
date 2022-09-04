@@ -4,6 +4,7 @@ import {
   Button,
   Container,
   Grid,
+  IconButton,
   List,
   ListItem,
   ListItemAvatar,
@@ -72,13 +73,16 @@ const Pokeapi = () => {
                     return (
                       <ListItem
                         secondaryAction={
-                          <Button
-                            variant="outlined"
-                            startIcon={<VisibilityIcon />}
-                            onClick={()=> {dispatch(getInfoPokeapi(pokemon.url))}}
+                          <IconButton
+                            onClick={() => {
+                              dispatch(getInfoPokeapi(pokemon.url));
+                            }}
+                            color="primary"
+                            aria-label="upload picture"
+                            component="label"
                           >
-                            Details
-                          </Button>
+                            <VisibilityIcon />
+                          </IconButton>
                         }
                       >
                         <ListItemAvatar>
@@ -98,7 +102,7 @@ const Pokeapi = () => {
                 </List>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Detail/>
+                <Detail />
               </Grid>
             </Grid>
           </Box>
