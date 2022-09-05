@@ -97,7 +97,7 @@ const Table = () => {
         <Typography variant="h6" component="h2" color="primary">
           Pokemon's
         </Typography>
-        <ModalPokemon pokemonList={pokemonList} setPokemonList={setPokemonList}/>
+        <ModalPokemon/>
       </Box>
       <Box style={{ height: "60vh", width: "100%" }}>
         <DataGrid

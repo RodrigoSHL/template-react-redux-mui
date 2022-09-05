@@ -2,7 +2,7 @@ import { Button, Modal, Box, Grid, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { useAppDispatch } from "../../../app/hooks";
-import { create } from "../../../features/crud/crudSlice";
+import { create, findAll } from "../../../features/crud/crudSlice";
 import { IPokemonCreate } from "../../../interfaces/IPokemonCreate.interface";
 
 const style = {
@@ -17,7 +17,7 @@ const style = {
   p: 4,
 };
 
-const ModalPokemon = ({ pokemonList, setPokemonList }: any) => {
+const ModalPokemon = () => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -38,7 +38,9 @@ const ModalPokemon = ({ pokemonList, setPokemonList }: any) => {
   const submitForm = async (e: any) => {
     e.preventDefault();
     dispatch(create(pokemon))
-      .then((response) => console.log("response", response))
+      .then((response) => {
+        dispatch(findAll())
+      })
       .catch((error) => console.log("error", error));
   };
 
