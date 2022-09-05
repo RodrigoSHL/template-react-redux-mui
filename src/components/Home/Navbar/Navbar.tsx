@@ -5,7 +5,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AdbIcon from "@mui/icons-material/Adb";
 import ToggleSwitch from "./ToggleSwitch";
 import AvatarOptions from "./AvatarOptions";
-
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
@@ -52,7 +51,7 @@ const NavBar = ({ open, drawerWidth, handleDrawerOpen }: any) => {
           component="div"
           sx={{ flexGrow: 1, marginLeft: 1 }}
         >
-          LOGO
+          AppLogo
         </Typography>
         <ToggleSwitch/>
         <AvatarOptions/>
