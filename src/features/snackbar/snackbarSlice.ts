@@ -29,6 +29,5 @@ export const { openSnackbar } = snackbarSlice.actions;
 export const selectSnackbar = (state: RootState) => state.snackbar.dataSnackbar;
 
 export const setOpenSnackbar = (objSettingSnackbar: ISnackbar) => (dispatch: any) => {
-  console.log('objSettingSnackbar', objSettingSnackbar);
   dispatch(openSnackbar(objSettingSnackbar));
 };

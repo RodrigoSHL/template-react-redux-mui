@@ -61,7 +61,7 @@ export const create = (obj:IPokemonCreate) => async (dispatch: any) => {
 
 export const update = (obj:IPokemonCreate, id:string) => async (dispatch: any) => {
   await axios
-    .post(`https://pokedex-api-rest.herokuapp.com/api/v2/pokemon/`, obj)
+    .patch(`https://pokedex-api-rest.herokuapp.com/api/v2/pokemon/`, obj)
     .then((response) => {
       console.log(response)
     })

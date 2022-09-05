@@ -1,34 +1,16 @@
 import React from "react";
-import {
-  Alert,
-  AlertProps,
-  Box,
-  Button,
-  Container,
-  Snackbar,
-  Stack,
-} from "@mui/material";
+import { Box, Button, Container, Stack } from "@mui/material";
 import styles from "./TestComponent.module.css";
+import { useAppDispatch } from "../../app/hooks";
+import { errorColor, infoColor, successColor, warningColor } from "../Middleware/Snackbar";
+import { setOpenSnackbar } from "../../features/snackbar/snackbarSlice";
 
 const TestComponent = () => {
-  const [snackbar, setSnackbar] = React.useState<Pick<
-    AlertProps,
-    "children" | "severity"
-  > | null>(null);
-
-  const handleCloseSnackbar = () => setSnackbar(null);
-
-  const openSuccessSnack = () => {
-    setSnackbar({
-      children: "Success Snackbar", severity: "success",
-    });
-  };
-
-  const openErrorSnack = () => {
-    setSnackbar({
-      children: "Error Snackbar", severity: "error",
-    });
-  };
+  const dispatch = useAppDispatch();
+  const objSuccess = {isOpen: true,message: 'Open Snackbar Success',severity: successColor,timeOut : 2000}
+  const objError = {isOpen: true,message: 'Open Snackbar Error',severity: errorColor,timeOut : 2000}
+  const objWarning = {isOpen: true,message: 'Open Snackbar Warning',severity: warningColor,timeOut : 2000}
+  const objInfo = {isOpen: true,message: 'Open Snackbar Info',severity: infoColor,timeOut : 2000}
 
   return (
     <>
@@ -37,8 +19,18 @@ const TestComponent = () => {
           <Box component="main" className={styles.containerTable}>
             <h1>Testing</h1>
             <Stack direction="row" spacing={2}>
-              <Button variant="contained" color="success" onClick={openSuccessSnack}>Success</Button>
-              <Button variant="contained" color="error" onClick={openErrorSnack}>Error</Button>
+              <Button variant="contained" color="success" onClick={() => dispatch(setOpenSnackbar(objSuccess))}>
+                Success
+              </Button>
+              <Button variant="contained" color="error" onClick={() => dispatch(setOpenSnackbar(objError))}>
+                Error
+              </Button>
+              <Button variant="contained" color="warning" onClick={() => dispatch(setOpenSnackbar(objWarning))}>
+                Warning
+              </Button>
+              <Button variant="contained" color="info" onClick={() => dispatch(setOpenSnackbar(objInfo))}>
+                Info
+              </Button>
               <Button variant="contained" disabled>
                 Disabled
               </Button>
@@ -48,11 +40,6 @@ const TestComponent = () => {
             </Stack>
           </Box>
         </Box>
-        {!!snackbar && (
-          <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={3000}>
-            <Alert {...snackbar} onClose={handleCloseSnackbar} />
-          </Snackbar>
-        )}
       </Container>
     </>
   );
