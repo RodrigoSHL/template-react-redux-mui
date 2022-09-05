@@ -4,16 +4,11 @@ import { Box, IconButton, Stack, Typography } from "@mui/material";
 //Slice
 import styles from "../Crud.module.css";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { findAll, remove, selectCrud } from "../../../features/crud/crudSlice";
+import { findAll, remove, selectCrud, setInfoUpdated } from "../../../features/crud/crudSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ModalPokemon from "./Modal";
-
-export interface IPokemon {
-  _id: string;
-  name: string;
-  no: number;
-}
+import { IPokemonRead } from "../../../interfaces/IPokemon.interface";
 
 const Table = () => {
   const dispatch = useAppDispatch();
@@ -33,10 +28,23 @@ const Table = () => {
         const remainingArr = pokemonList.filter((data) => data._id !== id);
         setPokemonList(remainingArr);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.log(error);
       });
   };
+
+  const updatePokemonButton = (objPokemon: any, e:any) => {
+    e.preventDefault();
+    dispatch(setInfoUpdated(objPokemon));
+    handleOpenModal();
+    setUpdateState(true);
+  };
+
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+
+  const [updateState, setUpdateState] = useState(false);
 
   const renderDetailsButton = (params: any) => {
     return (
@@ -46,15 +54,13 @@ const Table = () => {
             aria-label="edit"
             color="primary"
             style={{ marginLeft: 16 }}
-            onClick={() => {
-              console.log(params.row);
-            }}
+            onClick={(e: any) => updatePokemonButton(params.row, e)}
           >
             <EditIcon />
           </IconButton>
           <IconButton
             aria-label="delete"
-            color="warning"
+            color="secondary"
             style={{ marginLeft: 16 }}
             onClick={() => deletePokemonButton(params.row._id)}
           >
@@ -89,7 +95,7 @@ const Table = () => {
       disableClickEventBubbling: true,
     },
   ];
-  const [pokemonList, setPokemonList] = useState<IPokemon[]>([]);
+  const [pokemonList, setPokemonList] = useState<IPokemonRead[]>([]);
 
   return (
     <>
@@ -97,7 +103,7 @@ const Table = () => {
         <Typography variant="h6" component="h2" color="primary">
           Pokemon's
         </Typography>
-        <ModalPokemon/>
+        <ModalPokemon updateState={updateState} setUpdateState={setUpdateState} openModal={openModal} handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
       </Box>
       <Box style={{ height: "60vh", width: "100%" }}>
         <DataGrid
