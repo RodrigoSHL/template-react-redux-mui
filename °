@@ -1,0 +1,10 @@
+
+# Por favor ingresa el mensaje del commit para tus cambios. Las
+#  l'ineas que comiencen con '#' ser'an ignoradas, y un mensaje
+#  vac'io aborta el commit.
+#
+# En la rama feature/navbar
+# Cambios a ser confirmados:
+#	nuevos archivos: src/components/Home/AvatarOptions.tsx
+#	nuevos archivos: src/components/Home/Navbar/Navbar.tsx
+#
