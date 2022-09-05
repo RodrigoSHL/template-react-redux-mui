@@ -1,7 +1,7 @@
 import { Switch } from "@mui/material";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { toggleTheme } from "../../features/thematic/darkModeSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { toggleTheme } from "../../../features/thematic/darkModeSlice";
 
 const ToggleSwitch = () => {
   // get theme from store
