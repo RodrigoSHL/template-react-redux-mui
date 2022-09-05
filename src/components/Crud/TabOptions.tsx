@@ -19,7 +19,7 @@ export default function LabTabs() {
         <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="Data grid" value="1" />
-            <Tab label="Paginador" value="2" />
+            <Tab label="Pagination" value="2" />
           </TabList>
         </Box>
         <TabPanel value="1">
