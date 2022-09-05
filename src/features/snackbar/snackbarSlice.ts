@@ -1,15 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialStateSnack } from "../../app/initialVariable";
 import { RootState } from "../../app/store";
-import { AlertColor } from "@mui/material";
 import { types } from "../../app/types";
+import { ISnackbar } from "../../interfaces/ISnackbar.interface";
 
-export interface ISnackbar {
-  isOpen: boolean;
-  message?: string;
-  severity?: AlertColor | undefined;
-  timeOut?: number;
-}
 
 export const snackbarSlice = createSlice({
   name: types.snackbarType,
