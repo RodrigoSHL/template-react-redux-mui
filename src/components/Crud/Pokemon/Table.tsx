@@ -9,6 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ModalPokemon from "./Modal";
 import { IPokemonRead } from "../../../interfaces/IPokemon.interface";
+import Search from "./Search";
 
 const Table = () => {
   const dispatch = useAppDispatch();
@@ -104,6 +105,9 @@ const Table = () => {
           Pokemon's
         </Typography>
         <ModalPokemon updateState={updateState} setUpdateState={setUpdateState} openModal={openModal} handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
+      </Box>
+      <Box className={styles.search}>
+        <Search/>
       </Box>
       <Box style={{ height: "60vh", width: "100%" }}>
         <DataGrid

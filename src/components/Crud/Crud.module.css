@@ -1,19 +1,30 @@
 .container {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .containerTable {
-    flex-grow: 1;
-    padding: 3;
-  }
- 
-  .content {
-    margin: 20px;
-    padding: 20px;
-  }
-  .toolbar {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
+  display: flex;
+  flex-direction: row;
+}
+
+.containerTable {
+  flex-grow: 1;
+  padding: 3;
+}
+
+.content {
+  margin: 20px;
+  padding: 20px;
+}
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.searchAlign {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
