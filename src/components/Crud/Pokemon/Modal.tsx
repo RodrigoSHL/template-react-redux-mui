@@ -1,9 +1,14 @@
 import { Button, Modal, Box, Grid, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { useAppDispatch } from "../../../app/hooks";
-import { create } from "../../../features/crud/crudSlice";
-import { IPokemonCreate } from "../../../interfaces/IPokemonCreate.interface";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import {
+  create,
+  findAll,
+  selectCrud,
+  update,
+} from "../../../features/crud/crudSlice";
+import { IPokemonCreate } from "../../../interfaces/IPokemon.interface";
 
 const style = {
   position: "absolute" as "absolute",
@@ -17,19 +22,24 @@ const style = {
   p: 4,
 };
 
-const ModalPokemon = ({ pokemonList, setPokemonList }: any) => {
+const ModalPokemon = ({
+  updateState,
+  setUpdateState,
+  openModal,
+  handleOpenModal,
+  handleCloseModal,
+}: any) => {
   const dispatch = useAppDispatch();
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [pokemon, setPokemon] = useState<IPokemonCreate>({
+  const { pokemon: POKEMON }: any = useAppSelector(selectCrud);
+
+  const [pokemonObject, setPokemonObject] = useState<IPokemonCreate>({
     name: "",
     no: 1,
   });
 
   const addDataInMemory = (e: any) => {
     const { name, value } = e.target;
-    setPokemon((prev) => ({
+    setPokemonObject((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -37,27 +47,52 @@ const ModalPokemon = ({ pokemonList, setPokemonList }: any) => {
 
   const submitForm = async (e: any) => {
     e.preventDefault();
-    dispatch(create(pokemon))
-      .then((response) => console.log("response", response))
-      .catch((error) => console.log("error", error));
+    if (updateState) {
+      dispatch(update(pokemonObject, POKEMON._id))
+        .then((response) => {
+          dispatch(findAll());
+          handleCloseModal();
+        })
+        .catch((error) => console.log("error", error));
+    } else {
+      dispatch(create(pokemonObject))
+        .then((response) => {
+          dispatch(findAll());
+        })
+        .catch((error) => console.log("error", error));
+    }
   };
 
+  useEffect(() => {
+    setPokemonObject(POKEMON);
+  }, [POKEMON]);
+
+  const newPokemonButton = (e: any) => {
+    e.preventDefault();
+    setPokemonObject({ name: "", no: 1 });
+    handleOpenModal();
+    setUpdateState(false);
+  };
   return (
     <>
-      <Button onClick={handleOpen} color="secondary" startIcon={<AddBoxIcon />}>
+      <Button
+        onClick={(e: any) => newPokemonButton(e)}
+        color="secondary"
+        startIcon={<AddBoxIcon />}
+      >
         New
       </Button>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={openModal}
+        onClose={handleCloseModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            New Pokemon
+            { updateState ? 'Update Pokemon' : 'New Pokemon'}
           </Typography>
-          <Box component="form" onSubmit={submitForm} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={submitForm} sx={{ mt: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -65,10 +100,10 @@ const ModalPokemon = ({ pokemonList, setPokemonList }: any) => {
                   label="Ingresar nombre de pokemon"
                   variant="outlined"
                   fullWidth
-                  required
                   name="name"
                   onChange={addDataInMemory}
-                  value={pokemon.name}
+                  value={pokemonObject.name}
+                  required
                 />
               </Grid>
               <Grid item xs={12}>
@@ -81,7 +116,7 @@ const ModalPokemon = ({ pokemonList, setPokemonList }: any) => {
                   required
                   name="no"
                   onChange={addDataInMemory}
-                  value={pokemon.no}
+                  value={pokemonObject.no}
                   InputProps={{
                     inputProps: {
                       max: 5000,
@@ -91,19 +126,32 @@ const ModalPokemon = ({ pokemonList, setPokemonList }: any) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 2, mb: 2 }}
-                >
-                  Save
-                </Button>
+                {updateState ? (
+                  <Button
+                    type="submit"
+                    color="warning"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 2, mb: 2 }}
+                  >
+                    Update
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 2, mb: 2 }}
+                  >
+                    Save
+                  </Button>
+                )}
+
                 <Button
                   fullWidth
                   variant="contained"
                   color="secondary"
-                  onClick={handleClose}
+                  onClick={handleCloseModal}
                 >
                   Close
                 </Button>

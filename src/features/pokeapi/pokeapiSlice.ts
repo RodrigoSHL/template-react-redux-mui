@@ -9,13 +9,13 @@ export const pokeapiSlice = createSlice({
   name: types.pokeapiType,
   initialState: { ...initialStatePokeapi },
   reducers: {
-    getAllPokemon: (state: any = initialStatePokeapi,action: PayloadAction<any>) => {
+    getAllPokemon: (state: any = initialStatePokeapi, action: PayloadAction<any>) => {
       return {...state, ...action.payload}
     },
-    getNextPokemon: (state: any = initialStatePokeapi,action: PayloadAction<any>) => {
+    getNextPokemon: (state: any = initialStatePokeapi, action: PayloadAction<any>) => {
       return {...state, ...action.payload}
     },
-    setInfoPokemon: (state: any = initialStatePokeapi,action: PayloadAction<any>) => {
+    setInfoPokemon: (state: any = initialStatePokeapi, action: PayloadAction<any>) => {
       return {...state, onePokemon: action.payload }
     },
   },
