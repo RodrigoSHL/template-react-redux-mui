@@ -4,16 +4,23 @@ import { Box, IconButton, Stack, Typography } from "@mui/material";
 //Slice
 import styles from "../Crud.module.css";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { findAll, remove, selectCrud, setInfoUpdated } from "../../../features/crud/crudSlice";
+import {
+  findAll,
+  remove,
+  selectCrud,
+  setInfoUpdated,
+} from "../../../features/crud/crudSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ModalPokemon from "./Modal";
 import { IPokemonRead } from "../../../interfaces/IPokemon.interface";
+import Search from "./Search";
 
 const Table = () => {
   const dispatch = useAppDispatch();
-  //Store
   const { results: POKEMONS } = useAppSelector(selectCrud);
+  const [pokemonList, setPokemonList] = useState<IPokemonRead[]>([]);
+
   useEffect(() => {
     dispatch(findAll());
   }, [dispatch]);
@@ -22,7 +29,8 @@ const Table = () => {
     setPokemonList(POKEMONS);
   }, [POKEMONS]);
 
-  const deletePokemonButton = (id: string) => {
+  const deletePokemonButton = (id: string, e: any) => {
+    e.preventDefault();
     dispatch(remove(id))
       .then((response: any) => {
         const remainingArr = pokemonList.filter((data) => data._id !== id);
@@ -33,7 +41,7 @@ const Table = () => {
       });
   };
 
-  const updatePokemonButton = (objPokemon: any, e:any) => {
+  const updatePokemonButton = (objPokemon: any, e: any) => {
     e.preventDefault();
     dispatch(setInfoUpdated(objPokemon));
     handleOpenModal();
@@ -43,7 +51,6 @@ const Table = () => {
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
-
   const [updateState, setUpdateState] = useState(false);
 
   const renderDetailsButton = (params: any) => {
@@ -62,7 +69,7 @@ const Table = () => {
             aria-label="delete"
             color="secondary"
             style={{ marginLeft: 16 }}
-            onClick={() => deletePokemonButton(params.row._id)}
+            onClick={(e: any) => deletePokemonButton(params.row._id, e)}
           >
             <DeleteIcon />
           </IconButton>
@@ -95,15 +102,23 @@ const Table = () => {
       disableClickEventBubbling: true,
     },
   ];
-  const [pokemonList, setPokemonList] = useState<IPokemonRead[]>([]);
 
   return (
     <>
       <Box className={styles.toolbar}>
         <Typography variant="h6" component="h2" color="primary">
-          Pokemon's
+          Pokemons
         </Typography>
-        <ModalPokemon updateState={updateState} setUpdateState={setUpdateState} openModal={openModal} handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
+        <ModalPokemon
+          updateState={updateState}
+          setUpdateState={setUpdateState}
+          openModal={openModal}
+          handleOpenModal={handleOpenModal}
+          handleCloseModal={handleCloseModal}
+        />
+      </Box>
+      <Box className={styles.search}>
+        <Search />
       </Box>
       <Box style={{ height: "60vh", width: "100%" }}>
         <DataGrid

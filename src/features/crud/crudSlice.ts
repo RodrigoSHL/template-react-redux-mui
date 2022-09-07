@@ -16,7 +16,7 @@ export const crudSlice = createSlice({
       return { ...state, results: action.payload };
     },
     deleteOne: (state: any = initialStateCrud, action: PayloadAction<any>) => {
-      return { ...state, pokemon: null };
+      return { ...state, ...action.payload };
     },
     setInfoUpdated: (
       state: any = initialStateCrud,
@@ -100,14 +100,16 @@ export const update = (obj: any, id: string) => async (dispatch: any) => {
     });
 };
 
-export const findOne = (id: string) => async (dispatch: any) => {
+export const findOne = (param: any) => async (dispatch: any) => {
   await axios
-    .get(`https://pokedex-api-rest.herokuapp.com/api/v2/pokemon/${id}`)
+    .get(`https://pokedex-api-rest.herokuapp.com/api/v2/pokemon/${param.search}`)
     .then((response) => {
-      console.log(response);
+      let arr = [response.data]
+      dispatch(getAll(arr));
     })
     .catch((error) => {
-      console.log(error);
+      const msg: string = error.response.data.message;
+      dispatch(setOpenSnackbar(errorResponseSetting(msg)));
     });
 };
 
