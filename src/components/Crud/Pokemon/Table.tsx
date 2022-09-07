@@ -19,6 +19,7 @@ import Search from "./Search";
 const Table = () => {
   const dispatch = useAppDispatch();
   const { results: POKEMONS } = useAppSelector(selectCrud);
+  const [pokemonList, setPokemonList] = useState<IPokemonRead[]>([]);
 
   useEffect(() => {
     dispatch(findAll());
@@ -28,7 +29,8 @@ const Table = () => {
     setPokemonList(POKEMONS);
   }, [POKEMONS]);
 
-  const deletePokemonButton = (id: string) => {
+  const deletePokemonButton = (id: string, e: any) => {
+    e.preventDefault();
     dispatch(remove(id))
       .then((response: any) => {
         const remainingArr = pokemonList.filter((data) => data._id !== id);
@@ -67,7 +69,7 @@ const Table = () => {
             aria-label="delete"
             color="secondary"
             style={{ marginLeft: 16 }}
-            onClick={() => deletePokemonButton(params.row._id)}
+            onClick={(e: any) => deletePokemonButton(params.row._id, e)}
           >
             <DeleteIcon />
           </IconButton>
@@ -100,7 +102,6 @@ const Table = () => {
       disableClickEventBubbling: true,
     },
   ];
-  const [pokemonList, setPokemonList] = useState<IPokemonRead[]>([]);
 
   return (
     <>

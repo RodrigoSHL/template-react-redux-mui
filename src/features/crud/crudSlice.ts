@@ -102,11 +102,10 @@ export const update = (obj: any, id: string) => async (dispatch: any) => {
 
 export const findOne = (param: any) => async (dispatch: any) => {
   await axios
-    .get(
-      `https://pokedex-api-rest.herokuapp.com/api/v2/pokemon/${param.search}`
-    )
+    .get(`https://pokedex-api-rest.herokuapp.com/api/v2/pokemon/${param.search}`)
     .then((response) => {
-      console.log(response.data);
+      let arr = [response.data]
+      dispatch(getAll(arr));
     })
     .catch((error) => {
       const msg: string = error.response.data.message;

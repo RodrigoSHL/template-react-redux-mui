@@ -4,9 +4,9 @@ import TextField from "@mui/material/TextField";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useAppDispatch } from "../../../app/hooks";
-import { findOne } from "../../../features/crud/crudSlice";
+import { findAll, findOne } from "../../../features/crud/crudSlice";
 
-export default function BasicTextFields() {
+export default function SearchBar() {
   const dispatch = useAppDispatch();
   const [searchParam, setSearchParam] = React.useState<any>();
   const addDataInMemory = (e: any) => {
@@ -18,7 +18,11 @@ export default function BasicTextFields() {
   };
   const submitForm = async (e: any) => {
     e.preventDefault();
-    dispatch(findOne(searchParam))
+    if (searchParam.search !== '') {
+      dispatch(findOne(searchParam));
+    } else {
+      dispatch(findAll())
+    }
   };
 
   return (
@@ -30,7 +34,6 @@ export default function BasicTextFields() {
         variant="standard"
         sx={{ width: "35ch" }}
         onChange={addDataInMemory}
-        required
       />
       <IconButton type="submit" aria-label="delete" size="large" sx={{ mt: 1 }}>
         <SearchIcon fontSize="inherit" />
