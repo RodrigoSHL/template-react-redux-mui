@@ -33,11 +33,6 @@ export const authSlice = createSlice({
 // ACTION
 export const { onChecking, onLogin, onLogout, clearErrorMessage } = authSlice.actions;
 
-// BUSINESS
-export const authFetch = () => async (dispatch: any, getState: any) => {
-  return true;
-};
-
 // STATE-REDUCER
 export const selectAuth = (state: RootState) => state.auth;
 
