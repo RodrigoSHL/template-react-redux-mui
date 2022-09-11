@@ -23,8 +23,9 @@ import CircleOptions from "./CircleOptions";
 import AvTimerIcon from "@mui/icons-material/AvTimer";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
 import AppleIcon from "@mui/icons-material/Apple";
-import AppsIcon from '@mui/icons-material/Apps';
+import AppsIcon from "@mui/icons-material/Apps";
 import Snackbar from "../Middleware/Snackbar";
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 const drawerWidth = 240;
 
@@ -98,6 +99,8 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
+  const { status, checkAuthToken } = useAuthStore();
+
   let navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -161,6 +164,7 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
           <CircleOptions />
         </Toolbar>
       </AppBar>
+
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
@@ -172,23 +176,27 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-
-        <List>
-          {itemsList.map((item, index) => {
-            const { text, icon, onClick } = item;
-            return (
-              <ListItem button key={text} onClick={onClick}>
-                {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                <ListItemText primary={text} />
-              </ListItem>
-            );
-          })}
-        </List>
+        {status === "not-authenticated" ? (
+          ""
+        ) : (
+          <List>
+            {itemsList.map((item, index) => {
+              const { text, icon, onClick } = item;
+              return (
+                <ListItem button key={text} onClick={onClick}>
+                  {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                  <ListItemText primary={text} />
+                </ListItem>
+              );
+            })}
+          </List>
+        )}
       </Drawer>
+
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Navigation />
-        <Snackbar/>
+        <Snackbar />
       </Box>
     </Box>
   );
