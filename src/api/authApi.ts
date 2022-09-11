@@ -1,10 +1,13 @@
 import axios from "axios";
-const baseURL = process.env.REACT_APP_LOCAL_URL
+const baseURL = process.env.REACT_APP_LOCAL_URL;
 
 const authApi = axios.create({
-    baseURL: baseURL
-})
+  baseURL: baseURL,
+});
 
-//Todo: interceptors
+authApi.interceptors.request.use((config: any) => {
+  config.headers.Authorization = `Bearer ` + localStorage.getItem("token");
+  return config;
+});
 
-export default authApi
+export default authApi;
