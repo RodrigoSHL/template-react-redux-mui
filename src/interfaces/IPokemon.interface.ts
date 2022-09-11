@@ -1,10 +1,10 @@
 export interface IPokemonCreate {
-    name:string,
-    no: number,
+  name: string;
+  no: number;
 }
 
 export interface IPokemonRead {
-    _id: string;
-    name:string,
-    no: number,
+  _id: string;
+  name: string;
+  no: number;
 }
