@@ -1,23 +1,28 @@
-import { AlertColor } from "@mui/material";
+import { warningColor } from "../components/Middleware/Snackbar";
+import { IPokemonInfo } from "../interfaces/IPokeApi.interface";
 
-const severityColor: AlertColor = "warning";
-interface IPokemonInfo {
-  name: string;
-  weight: number;
-  height: number;
-  sprites: string;
-  types: string[]
-}
+/* Auth */
+export const initialStateAuth = {
+  status: 'checking', //'authenticated' - 'not-authenticated'
+  user: {},
+  errorMessage: undefined
+};
 
-const Pokemon:IPokemonInfo = {name:'',weight:0,height:0,sprites:'',types:[]}
-
-/* Pokeapi */
+/* CRUD */
 export const initialStateCrud = {
   results: [],
   pokemon: {}
 };
 
 /* Pokeapi */
+const Pokemon: IPokemonInfo = {
+  name: "",
+  weight: 0,
+  height: 0,
+  sprites: "",
+  types: [],
+};
+
 export const initialStatePokeapi = {
   count: 0,
   next: null,
@@ -30,7 +35,7 @@ export const initialStatePokeapi = {
 export const initialStateSetSnackbar = {
   isOpen: false,
   message: "",
-  severity: severityColor,
+  severity: warningColor,
   timeOut: 0,
 };
 

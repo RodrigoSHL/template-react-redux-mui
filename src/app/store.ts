@@ -5,15 +5,17 @@ import snackbarReducer from "../features/snackbar/snackbarSlice";
 import pokeapiReducer from "../features/pokeapi/pokeapiSlice";
 import exampleReducer from "../features/example/exampleSlice";
 import crudReducer from "../features/crud/crudSlice";
+import authReducer from "../features/auth/authSlice";
 
 export const store = configureStore({
   reducer: {
-    example: exampleReducer,
+    auth: authReducer,
     counter: counterReducer,
-    darkMode: darkModeReducer,
-    snackbar: snackbarReducer,
-    pokeapi: pokeapiReducer,
     crud: crudReducer,
+    darkMode: darkModeReducer,
+    example: exampleReducer,
+    pokeapi: pokeapiReducer,
+    snackbar: snackbarReducer,
   },
 });
 

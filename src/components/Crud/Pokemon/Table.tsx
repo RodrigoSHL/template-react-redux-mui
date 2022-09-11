@@ -100,7 +100,7 @@ const Table = () => {
       flex: 1,
       renderCell: renderDetailsButton,
       disableClickEventBubbling: true,
-    },
+    }
   ];
 
   return (
