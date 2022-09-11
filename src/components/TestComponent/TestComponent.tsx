@@ -17,7 +17,7 @@ const TestComponent = () => {
       <Container maxWidth="lg">
         <Box className={styles.container}>
           <Box component="main" className={styles.containerTable}>
-            <h1>Testing</h1>
+            <h1>Testing Snackbar</h1>
             <Stack direction="row" spacing={2}>
               <Button variant="contained" color="success" onClick={() => dispatch(setOpenSnackbar(objSuccess))}>
                 Success
