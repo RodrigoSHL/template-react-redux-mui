@@ -4,6 +4,7 @@ import { Counter } from "../components/Counter/Counter";
 import Crud from "../components/Crud/Crud";
 import Pokeapi from "../components/Pokeapi/Pokeapi";
 import TestComponent from "../components/TestComponent/TestComponent";
+import Login from "../components/Auth/Login";
 
 const Navigation = () => {
   return (
@@ -13,6 +14,7 @@ const Navigation = () => {
         <Route path="/test" element={<TestComponent />} />
         <Route path="/pokeapi" element={<Pokeapi />} />
         <Route path="/crud" element={<Crud />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<TestComponent />} />
       </Routes>
     </>
