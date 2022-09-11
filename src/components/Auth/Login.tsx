@@ -16,7 +16,7 @@ import { useAuthStore } from "../../hooks/useAuthStore";
 import { useAppDispatch } from "../../app/hooks";
 import { errorColor } from "../Middleware/Snackbar";
 import { setOpenSnackbar } from "../../features/snackbar/snackbarSlice";
-const objError = {isOpen: true,message: 'Incorrect credentials',severity: errorColor,timeOut : 2000}
+const objError = {isOpen: true,message: 'Problems with server',severity: errorColor,timeOut : 2000}
 
 function Copyright(props: any) {
   return (
@@ -61,8 +61,6 @@ export default function SignIn() {
     if(errorMessage !== undefined) {
       dispatch(setOpenSnackbar(objError))
     }
-  
-  
   }, [errorMessage])
   
 
