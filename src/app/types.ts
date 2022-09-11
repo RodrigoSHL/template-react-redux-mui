@@ -1,13 +1,12 @@
 export const types = {
-  /* Snackbar */
-  snackbarType: "[Snackbar] Snackbar Store",
-
-  /* Pokeapi */
-  pokeapiType: "[Pokeapi] Pokeapi Store",
-
-  /* Example */
-  exampleType: "[Example] Example Store",
-
+  /* Auth */
+  authType: "[Auth] Auth Store",
   /* Crud */
   crudType: "[CRUD] CRUD Store",
+  /* Example */
+  exampleType: "[Example] Example Store",
+  /* Snackbar */
+  snackbarType: "[Snackbar] Snackbar Store",
+  /* Pokeapi */
+  pokeapiType: "[Pokeapi] Pokeapi Store",
 };
