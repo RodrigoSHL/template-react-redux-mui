@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import pokemonApi from "../../api/pokemonApi";
 import { initialStateCrud } from "../../app/initialVariable";
 import { RootState } from "../../app/store";
 import { types } from "../../app/types";
@@ -7,7 +7,6 @@ import { errorColor, successColor } from "../../components/Middleware/Snackbar";
 import { IPokemonCreate } from "../../interfaces/IPokemon.interface";
 import { ISnackbar } from "../../interfaces/ISnackbar.interface";
 import { setOpenSnackbar } from "../snackbar/snackbarSlice";
-const baseURL = process.env.REACT_APP_API_URL
 
 export const crudSlice = createSlice({
   name: types.crudType,
@@ -47,8 +46,8 @@ export const { getAll, deleteOne, setInfoUpdated } = crudSlice.actions;
 
 //Business
 export const findAll = () => async (dispatch: any) => {
-  await axios
-    .get(`${baseURL}/pokemon?limit=600`)
+  await pokemonApi
+    .get(`/pokemon?limit=600`)
     .then((response) => {
       dispatch(getAll(response.data));
     })
@@ -58,8 +57,8 @@ export const findAll = () => async (dispatch: any) => {
 };
 
 export const remove = (id: string) => async (dispatch: any) => {
-  await axios
-    .delete(`${baseURL}/pokemon/${id}`)
+  await pokemonApi
+    .delete(`/pokemon/${id}`)
     .then((response) => {
       dispatch(deleteOne(response.data));
     })
@@ -69,8 +68,8 @@ export const remove = (id: string) => async (dispatch: any) => {
 };
 
 export const create = (obj: IPokemonCreate) => async (dispatch: any) => {
-  await axios
-    .post(`${baseURL}/pokemon/`, obj)
+  await pokemonApi
+    .post(`/pokemon/`, obj)
     .then((response) => {
       const msg: string = "Pokemon successfully saved";
       dispatch(setOpenSnackbar(successResponseSetting(msg)));
@@ -86,9 +85,9 @@ export const update = (obj: any, id: string) => async (dispatch: any) => {
     name: obj.name,
     no: obj.no,
   };
-  await axios
+  await pokemonApi
     .patch(
-      `${baseURL}/pokemon/${id}`,
+      `/pokemon/${id}`,
       objPokemon
     )
     .then((response) => {
@@ -102,8 +101,8 @@ export const update = (obj: any, id: string) => async (dispatch: any) => {
 };
 
 export const findOne = (param: any) => async (dispatch: any) => {
-  await axios
-    .get(`${baseURL}/pokemon/${param.search}`)
+  await pokemonApi
+    .get(`/pokemon/${param.search}`)
     .then((response) => {
       let arr = [response.data]
       dispatch(getAll(arr));
