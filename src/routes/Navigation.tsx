@@ -15,6 +15,12 @@ const Navigation = () => {
     checkAuthToken();
   }, []);
 
+  if ( status === 'checking' ) {
+    return (
+        <h3>Cargando...</h3>
+    )
+}
+
   return (
     <>
       <Routes>
