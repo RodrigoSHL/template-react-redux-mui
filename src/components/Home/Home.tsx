@@ -176,9 +176,7 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        {status === "not-authenticated" ? (
-          ""
-        ) : (
+        {status === "authenticated" ? (
           <List>
             {itemsList.map((item, index) => {
               const { text, icon, onClick } = item;
@@ -190,6 +188,8 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
               );
             })}
           </List>
+        ) : (
+          ""
         )}
       </Drawer>
 
