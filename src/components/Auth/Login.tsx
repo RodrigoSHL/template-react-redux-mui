@@ -13,10 +13,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { IUserLogin } from "../../interfaces/IUserLogin.interface";
 import { useAuthStore } from "../../hooks/useAuthStore";
-import { useAppDispatch } from "../../app/hooks";
-import { errorColor } from "../Middleware/Snackbar";
-import { setOpenSnackbar } from "../../features/snackbar/snackbarSlice";
-const objError = {isOpen: true,message: 'Problems with server',severity: errorColor,timeOut : 2000}
 
 function Copyright(props: any) {
   return (
@@ -37,8 +33,7 @@ function Copyright(props: any) {
 }
 
 export default function SignIn() {
-  const { startLogin, errorMessage } = useAuthStore();
-  const dispatch = useAppDispatch();
+  const { startLogin } = useAuthStore();
   const [userLogin, setUserLogin] = useState<IUserLogin>({
     email: "",
     password: "",
@@ -56,13 +51,6 @@ export default function SignIn() {
     e.preventDefault();
     startLogin(userLogin);
   };
-
-  useEffect(() => {
-    if(errorMessage !== undefined) {
-      dispatch(setOpenSnackbar(objError))
-    }
-  }, [errorMessage])
-  
 
   return (
     <Container component="main" maxWidth="xs">
