@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../components/Auth/Login";
-import Calendar from "../components/Calendar/Calendar";
+import Calendar from "../components/Calendar/CalendarPage";
 import { Counter } from "../components/Counter/Counter";
 import Crud from "../components/Crud/Crud";
 import Pokeapi from "../components/Pokeapi/Pokeapi";
