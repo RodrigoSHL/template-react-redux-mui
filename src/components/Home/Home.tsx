@@ -24,6 +24,7 @@ import AvTimerIcon from "@mui/icons-material/AvTimer";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
 import AppleIcon from "@mui/icons-material/Apple";
 import AppsIcon from "@mui/icons-material/Apps";
+import CalendarIcon from "@mui/icons-material/CalendarMonth";
 import Snackbar from "../Middleware/Snackbar";
 import { useAuthStore } from "../../hooks/useAuthStore";
 
@@ -132,6 +133,11 @@ export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
       text: "Crud",
       icon: <AppsIcon />,
       onClick: () => navigate("/crud"),
+    },
+    {
+      text: "Calendar",
+      icon: <CalendarIcon />,
+      onClick: () => navigate("/calendar"),
     },
   ];
   return (

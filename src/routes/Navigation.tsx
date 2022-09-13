@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../components/Auth/Login";
+import Calendar from "../components/Calendar/Calendar";
 import { Counter } from "../components/Counter/Counter";
 import Crud from "../components/Crud/Crud";
 import Pokeapi from "../components/Pokeapi/Pokeapi";
@@ -35,7 +36,7 @@ const Navigation = () => {
             <Route path="/test" element={<TestComponent />} />
             <Route path="/pokeapi" element={<Pokeapi />} />
             <Route path="/crud" element={<Crud />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/calendar" element={<Calendar />} />
             <Route path="/" element={<TestComponent />} />
             {/* <Route path="/*" element={<Navigate to="/" />} /> */}
           </>
