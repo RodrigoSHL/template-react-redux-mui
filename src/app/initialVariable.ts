@@ -8,6 +8,11 @@ export const initialStateAuth = {
   errorMessage: undefined
 };
 
+/* Calendar */
+export const initialStateCalendar= {
+  title: '',
+};
+
 /* CRUD */
 export const initialStateCrud = {
   results: [],
@@ -32,6 +37,7 @@ export const initialStatePokeapi = {
 };
 
 /* Snackbar */
+
 export const initialStateSetSnackbar = {
   isOpen: false,
   message: "",
@@ -46,4 +52,9 @@ export const initialStateSnack = {
 /* Slice Base */
 export const initialStateExample = {
   listExample: [],
+};
+
+/* UI */
+export const initialStateUI= {
+  isDateModalOpen: false,
 };
