@@ -40,7 +40,6 @@ export const useAuthStore = () => {
     if (!token) return dispatch(onLogout("Authentication error"));
     try {
       const { data } = await authApi.get("auth/check-status");
-      console.log("data", data);
       localStorage.setItem("token", data.token);
       localStorage.setItem("token-init-date", new Date().getTime().toString());
       dispatch(onLogin({ name: data._doc.name, uid: data._doc._id, roles: data._doc.roles }));
