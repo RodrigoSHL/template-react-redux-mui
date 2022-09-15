@@ -6,6 +6,8 @@ import pokeapiReducer from "../features/pokeapi/pokeapiSlice";
 import exampleReducer from "../features/example/exampleSlice";
 import crudReducer from "../features/crud/crudSlice";
 import authReducer from "../features/auth/authSlice";
+import calendarReducer from "../features/calendar/calendarSlice";
+import uiReducer from "../features/ui/uiSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +18,8 @@ export const store = configureStore({
     example: exampleReducer,
     pokeapi: pokeapiReducer,
     snackbar: snackbarReducer,
+    calendar: calendarReducer,
+    ui: uiReducer,
   },
 });
 
