@@ -9,19 +9,36 @@ export const calendarSlice = createSlice({
   name: types.calendarType,
   initialState: { ...initialStateCalendar },
   reducers: {
-    getAll: (state: any = initialStateCalendar, action: PayloadAction<any>) => {
-      return { ...state, results: action.payload };
+    onSetActiveEvent: (
+      state: any = initialStateCalendar,
+      action: PayloadAction<any>
+    ) => {
+      state.activeEvent = action.payload;
+    },
+    onAddNewEvent: (
+      state: any = initialStateCalendar,
+      action: PayloadAction<any>
+    ) => {
+      state.events.push(action.payload);
+      state.activeEvent = null;
+    },
+    onUpdateNewEvent: (
+      state: any = initialStateCalendar,
+      {payload}: PayloadAction<any>
+    ) => {
+      state.events = state.events.map((event: any) => {
+        if( event._id === payload._id) {
+          return payload
+        }
+        return event;
+      });
     },
   },
 });
 
 // ACTION
-export const { getAll } = calendarSlice.actions;
-
-// BUSINESS
-// export const calendarFetch = () => async (dispatch: any, getState: any) => {
-//   return true;
-// };
+export const { onSetActiveEvent, onAddNewEvent, onUpdateNewEvent } =
+  calendarSlice.actions;
 
 // STATE-REDUCER
 export const selectCalendar = (state: RootState) => state.calendar;
