@@ -30,8 +30,10 @@ const dateError = {
 
 const CalendarModal = ({ openModal, handleCloseModal }: any) => {
   const dispatch = useAppDispatch();
-  const { activeEvent, saveDateEvent } = useCalendarStore();
+  const { activeEvent, saveDateEvent, setStartHour, setEndHour } =
+    useCalendarStore();
   const [calendarObject, setCalendarObject] = useState<any>({
+    _id: "",
     title: "",
     notes: "",
     start: new Date(),
@@ -63,17 +65,18 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
     }
     if (calendarObject.title.length <= 0) return;
     const agendaInfo = {
-      _id: '1313',
+      _id: activeEvent._id,
       title: calendarObject.title,
-      note: calendarObject.notes,
-      start: valueInitialDate,
-      end: valueEndDate,
+      notes: calendarObject.notes,
+      start: activeEvent ? activeEvent.start : valueInitialDate,
+      end: activeEvent ? activeEvent.end : valueEndDate,
       bgColor: "#fafafa",
       user: {
         _id: "123",
         name: "Rodrigo Catalan",
       },
     };
+    console.log("agendaInfo", agendaInfo);
     await saveDateEvent(agendaInfo);
   };
 
@@ -101,9 +104,12 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
                 <LocalizationProvider dateAdapter={AdapterDateFns} locale={es}>
                   <DateTimePicker
                     label="Initial Date"
-                    value={valueInitialDate}
+                    value={activeEvent ? activeEvent.start : valueInitialDate}
                     onChange={(newValue: any) => {
                       setValueInitialDate(newValue);
+                      setStartHour({
+                        start: newValue,
+                      });
                     }}
                     renderInput={(params: any) => (
                       <TextField fullWidth {...params} />
@@ -116,9 +122,12 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
                 <LocalizationProvider dateAdapter={AdapterDateFns} locale={es}>
                   <DateTimePicker
                     label="End Date"
-                    value={valueEndDate}
+                    value={activeEvent ? activeEvent.end : valueEndDate}
                     onChange={(newValue: any) => {
                       setValueEndDate(newValue);
+                      setEndHour({
+                        end: newValue,
+                      });
                     }}
                     renderInput={(params: any) => (
                       <TextField fullWidth {...params} />
