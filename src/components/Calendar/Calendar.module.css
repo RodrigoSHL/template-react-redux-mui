@@ -8,10 +8,17 @@
   padding: 3;
 }
 
-.fab {
+.addFab {
   bottom: 25px;
   padding: 25px;
   position: fixed;
   right: 25px;
   float: right;
+}
+
+.delFab {
+  bottom: 25px;
+  padding: 25px;
+  position: fixed;
+  float: left;
 }
