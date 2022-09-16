@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal, Box, Grid, TextField, Typography } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -8,6 +8,7 @@ import { es } from "date-fns/locale";
 import { useAppDispatch } from "../../app/hooks";
 import { errorColor } from "../Middleware/Snackbar";
 import { openSnackbar } from "../../features/snackbar/snackbarSlice";
+import { useCalendarStore } from "../../hooks/useCalendarStore";
 
 const style = {
   position: "absolute" as "absolute",
@@ -29,12 +30,22 @@ const dateError = {
 
 const CalendarModal = ({ openModal, handleCloseModal }: any) => {
   const dispatch = useAppDispatch();
-  const [calendarObject, setCalendarObject] = useState({
+  const { activeEvent, saveDateEvent } = useCalendarStore();
+  const [calendarObject, setCalendarObject] = useState<any>({
     title: "",
     notes: "",
+    start: new Date(),
+    end: addHours(new Date(), 1),
   });
 
+  useEffect(() => {
+    if (activeEvent !== null) {
+      setCalendarObject({ ...activeEvent });
+    }
+  }, [activeEvent]);
+
   const [updateState, setUpdateState] = useState(false);
+
   const addDataInMemory = (e: any) => {
     const { name, value } = e.target;
     setCalendarObject((prev: any) => ({
@@ -52,12 +63,18 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
     }
     if (calendarObject.title.length <= 0) return;
     const agendaInfo = {
+      _id: '1313',
       title: calendarObject.title,
       note: calendarObject.notes,
       start: valueInitialDate,
       end: valueEndDate,
+      bgColor: "#fafafa",
+      user: {
+        _id: "123",
+        name: "Rodrigo Catalan",
+      },
     };
-    console.log(agendaInfo);
+    await saveDateEvent(agendaInfo);
   };
 
   const [valueInitialDate, setValueInitialDate] = useState<Date>(new Date());
