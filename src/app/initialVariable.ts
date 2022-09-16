@@ -10,7 +10,7 @@ export const initialStateAuth = {
 };
 
 /* Calendar */
-const tempEvent = {
+const tempEventObject = {
   _id: '1313',
   title: "Happy Birthday Boss",
   notes: "Have to make the pastel ",
@@ -23,9 +23,11 @@ const tempEvent = {
   },
 };
 
+const activeEventObject: any = {}
+
 export const initialStateCalendar = {
-  events: [tempEvent],
-  activeEvent: {},
+  events: [tempEventObject],
+  activeEvent: activeEventObject,
 };
 
 /* CRUD */
