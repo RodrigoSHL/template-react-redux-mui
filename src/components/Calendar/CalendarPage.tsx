@@ -11,7 +11,7 @@ import { useCalendarStore } from "../../hooks/useCalendarStore";
 import FabAddNew from "./FabAddNew";
 
 const CalendarPage = () => {
-  const { events, setActiveEvent } = useCalendarStore();
+  const { events, setActiveEvent, saveSelectedDateEvent } = useCalendarStore();
   const { isDateModalOpen, openDateModal, closeDateModal } = useUiStore();
   const [lastView, setLastView] = useState<any>(
     localStorage.getItem("lastView") || "week"
@@ -34,6 +34,7 @@ const CalendarPage = () => {
 
   const onDoubleClick = (event: any) => {
     console.log({ doubleClick: event });
+
     openDateModal();
   };
 
@@ -45,6 +46,24 @@ const CalendarPage = () => {
   const onViewChanged = (event: any) => {
     localStorage.setItem("lastView", event);
     setLastView(event);
+  };
+
+  const selectEvent = async (slotInfo: any) => {
+    const { start, end } = slotInfo;
+    const agendaInfoDragDrop = {
+      _id: new Date().getTime(),
+      title: "Title",
+      notes: "Nota",
+      start: start,
+      end: end,
+      bgColor: "#fafafa",
+      user: {
+        _id: "123",
+        name: "Rodrigo Catalan",
+      },
+    };
+    console.log("agendaInfoDragDrop", agendaInfoDragDrop);
+    await saveSelectedDateEvent(agendaInfoDragDrop);
   };
 
   return (
@@ -62,19 +81,24 @@ const CalendarPage = () => {
               style={{ height: "calc(90vh - 60px)" }}
               messages={getMessages()}
               eventPropGetter={eventStyleGetter}
+              selectable
               components={{
                 event: CalendarEvent,
               }}
               onDoubleClickEvent={onDoubleClick}
               onSelectEvent={onSelect}
               onView={onViewChanged}
+              onSelectSlot={(slotInfo) => {
+                console.log(slotInfo);
+                selectEvent(slotInfo);
+              }}
             />
             <CalendarModal
               openModal={isDateModalOpen}
               handleCloseModal={closeDateModal}
               handleOpenModal={openDateModal}
             />
-            <FabAddNew/>
+            <FabAddNew />
           </Box>
         </Box>
       </Container>
