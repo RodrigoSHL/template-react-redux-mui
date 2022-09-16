@@ -20,24 +20,36 @@ export const calendarSlice = createSlice({
       action: PayloadAction<any>
     ) => {
       state.events.push(action.payload);
-      state.activeEvent = null;
+      state.activeEvent = action.payload;
     },
     onUpdateNewEvent: (
       state: any = initialStateCalendar,
-      {payload}: PayloadAction<any>
+      { payload }: PayloadAction<any>
     ) => {
       state.events = state.events.map((event: any) => {
-        if( event._id === payload._id) {
-          return payload
+        if (event._id === payload._id) {
+          return payload;
         }
         return event;
       });
+    },
+    onChangeStart: (
+      state: any = initialStateCalendar,
+      { payload }: PayloadAction<any>
+    ) => {
+      state.activeEvent.start = payload.start;
+    },
+    onChangeEnd: (
+      state: any = initialStateCalendar,
+      { payload }: PayloadAction<any>
+    ) => {
+      state.activeEvent.end = payload.end;
     },
   },
 });
 
 // ACTION
-export const { onSetActiveEvent, onAddNewEvent, onUpdateNewEvent } =
+export const { onSetActiveEvent, onAddNewEvent, onUpdateNewEvent, onChangeStart, onChangeEnd } =
   calendarSlice.actions;
 
 // STATE-REDUCER
