@@ -1,22 +1,37 @@
+import { addHours } from "date-fns";
 import { warningColor } from "../components/Middleware/Snackbar";
 import { IPokemonInfo } from "../interfaces/IPokeApi.interface";
 
 /* Auth */
 export const initialStateAuth = {
-  status: 'checking', //'authenticated' - 'not-authenticated'
+  status: "checking", //'authenticated' - 'not-authenticated'
   user: {},
-  errorMessage: undefined
+  errorMessage: undefined,
 };
 
 /* Calendar */
-export const initialStateCalendar= {
-  title: '',
+const tempEvent = {
+  _id: '1313',
+  title: "Happy Birthday Boss",
+  notes: "Have to make the pastel ",
+  start: new Date(),
+  end: addHours(new Date(), 1),
+  bgColor: "#fafafa",
+  user: {
+    _id: "123",
+    name: "Rodrigo Catalan",
+  },
+};
+
+export const initialStateCalendar = {
+  events: [tempEvent],
+  activeEvent: {},
 };
 
 /* CRUD */
 export const initialStateCrud = {
   results: [],
-  pokemon: {}
+  pokemon: {},
 };
 
 /* Pokeapi */
@@ -55,6 +70,6 @@ export const initialStateExample = {
 };
 
 /* UI */
-export const initialStateUI= {
+export const initialStateUI = {
   isDateModalOpen: false,
 };
