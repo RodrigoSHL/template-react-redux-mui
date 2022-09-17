@@ -3,15 +3,14 @@ import styles from "./Calendar.module.css";
 import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { localizer, getMessages } from "../../helpers";
-import CalendarEvent from "./CalendarEvent";
 import { useState } from "react";
-import CalendarModal from "./CalendarModal";
+import CalendarPublicModal from "./CalendarPublicModal";
 import { useUiStore } from "../../hooks/useUiStore";
 import { useCalendarStore } from "../../hooks/useCalendarStore";
-import FabAddNew from "./FabAddNew";
+
 const today = new Date();
 
-const CalendarPage = () => {
+const CalendarPublicPage = () => {
   const { events, setActiveEvent, saveSelectedDateEvent } = useCalendarStore();
   const { isDateModalOpen, openDateModal, closeDateModal } = useUiStore();
   const [lastView, setLastView] = useState<any>(
@@ -81,10 +80,6 @@ const CalendarPage = () => {
               style={{ height: "calc(90vh - 60px)" }}
               messages={getMessages()}
               eventPropGetter={eventStyleGetter}
-              selectable
-              components={{
-                event: CalendarEvent,
-              }}
               onDoubleClickEvent={onDoubleClick}
               onSelectEvent={onSelect}
               onView={onViewChanged}
@@ -109,12 +104,11 @@ const CalendarPage = () => {
                 )
               }
             />
-            <CalendarModal
+            <CalendarPublicModal
               openModal={isDateModalOpen}
               handleCloseModal={closeDateModal}
               handleOpenModal={openDateModal}
             />
-            <FabAddNew />
           </Box>
         </Box>
       </Container>
@@ -122,4 +116,4 @@ const CalendarPage = () => {
   );
 };
 
-export default CalendarPage;
+export default CalendarPublicPage;

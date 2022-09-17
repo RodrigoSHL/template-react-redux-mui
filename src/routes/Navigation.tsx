@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../components/Auth/Login";
 import Calendar from "../components/Calendar/CalendarPage";
+import CalendarPublic from "../components/CalendarPublic/CalendarPublicPage";
 import { Counter } from "../components/Counter/Counter";
 import Crud from "../components/Crud/Crud";
 import Pokeapi from "../components/Pokeapi/Pokeapi";
@@ -27,8 +28,9 @@ const Navigation = () => {
       <Routes>
         {status === "not-authenticated" ? (
           <>
-            <Route path="/auth/*" element={<Login />} />
-            <Route path="/*" element={<Navigate to="/auth/login" />} />
+            <Route path="/calendar" element={<CalendarPublic />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/*" element={<Navigate to="/calendar" />} />
           </>
         ) : (
           <>
