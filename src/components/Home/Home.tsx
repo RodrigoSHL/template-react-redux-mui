@@ -99,7 +99,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer({ isDarkTheme, setIsDarkTheme }: any) {
+export default function MiniDrawer() {
   const { status, checkAuthToken } = useAuthStore();
 
   let navigate = useNavigate();
