@@ -1,12 +1,20 @@
 import React from "react";
-import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { useAuthStore } from "../../hooks/useAuthStore";
-
-const settings = ["Logout"];
+import { useNavigate } from "react-router-dom";
 
 const CircleOptions = () => {
+  const { startLogout, user, status } = useAuthStore();
+  let navigate = useNavigate();
 
-  const {startLogout, user} = useAuthStore();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -41,11 +49,15 @@ const CircleOptions = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={startLogout}>
-            <Typography textAlign="center">{setting}</Typography>
+        {status === "authenticated" ? (
+          <MenuItem onClick={startLogout}>
+            <Typography textAlign="center">Logout</Typography>
           </MenuItem>
-        ))}
+        ) : (
+          <MenuItem onClick={() => navigate("/login")}>
+            <Typography textAlign="center">Login</Typography>
+          </MenuItem>
+        )}
       </Menu>
     </Box>
   );
