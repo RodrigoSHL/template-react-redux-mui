@@ -100,14 +100,6 @@ const CalendarPage = () => {
                   8
                 )
               }
-              max={
-                new Date(
-                  today.getFullYear(),
-                  today.getMonth(),
-                  today.getDate(),
-                  22
-                )
-              }
             />
             <CalendarModal
               openModal={isDateModalOpen}
