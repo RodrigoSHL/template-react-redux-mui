@@ -30,7 +30,7 @@ const dateError = {
 
 const CalendarModal = ({ openModal, handleCloseModal }: any) => {
   const dispatch = useAppDispatch();
-  const { activeEvent, saveDateEvent, setStartHour, setEndHour } =
+  const { activeEvent, startSavingEvent, setStartHour, setEndHour } =
     useCalendarStore();
   const [calendarObject, setCalendarObject] = useState<any>({
     _id: "",
@@ -77,7 +77,7 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
       },
     };
     console.log("agendaInfo", agendaInfo);
-    await saveDateEvent(agendaInfo);
+    await startSavingEvent(agendaInfo);
   };
 
   const [valueInitialDate, setValueInitialDate] = useState<Date>(new Date());
