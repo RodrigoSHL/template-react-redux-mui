@@ -45,12 +45,26 @@ export const calendarSlice = createSlice({
     ) => {
       state.activeEvent.end = payload.end;
     },
+    onDeleteEvent: (state: any = initialStateCalendar) => {
+      if (state.activeEvent) {
+        state.events = state.events.filter(
+          (event: any) => event._id !== state.activeEvent._id
+        );
+        state.activeEvent = null;
+      }
+    },
   },
 });
 
 // ACTION
-export const { onSetActiveEvent, onAddNewEvent, onUpdateNewEvent, onChangeStart, onChangeEnd } =
-  calendarSlice.actions;
+export const {
+  onSetActiveEvent,
+  onAddNewEvent,
+  onUpdateNewEvent,
+  onChangeStart,
+  onChangeEnd,
+  onDeleteEvent,
+} = calendarSlice.actions;
 
 // STATE-REDUCER
 export const selectCalendar = (state: RootState) => state.calendar;
