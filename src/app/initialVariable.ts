@@ -16,7 +16,7 @@ const tempEventObject = {
   notes: "Have to make the pastel ",
   start: new Date(),
   end: addHours(new Date(), 1),
-  bgColor: "#fafafa",
+  bgColor: "#f50057",
   user: {
     _id: "123",
     name: "Rodrigo Catalan",
