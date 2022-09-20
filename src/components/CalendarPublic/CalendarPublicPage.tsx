@@ -24,7 +24,7 @@ const CalendarPublicPage = () => {
     isSelected: any
   ) => {
     const style = {
-      backgroundColor: "#347CF7",
+      backgroundColor: event.bgColor,
       borderRadius: "0px",
       opacity: 0.8,
       color: "white",
@@ -40,8 +40,15 @@ const CalendarPublicPage = () => {
   const onSelect = (event: any) => {
     console.log({ click: event });
     setActiveEvent(event);
+    const style = {
+      backgroundColor: "#f50057",
+      borderRadius: "0px",
+      opacity: 0.8,
+      color: "white",
+    };      
+    return { style };
   };
-
+  
   const onViewChanged = (event: any) => {
     localStorage.setItem("lastView", event);
     setLastView(event);
@@ -100,7 +107,7 @@ const CalendarPublicPage = () => {
                   today.getFullYear(),
                   today.getMonth(),
                   today.getDate(),
-                  22
+                  23
                 )
               }
             />
