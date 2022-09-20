@@ -1,4 +1,4 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { configureStore, ThunkAction, Action, getDefaultMiddleware } from "@reduxjs/toolkit";
 import counterReducer from "../features/counter/counterSlice";
 import darkModeReducer from "../features/thematic/darkModeSlice";
 import snackbarReducer from "../features/snackbar/snackbarSlice";
@@ -21,6 +21,9 @@ export const store = configureStore({
     calendar: calendarReducer,
     ui: uiReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false,
+  })
 });
 
 export type AppDispatch = typeof store.dispatch;
