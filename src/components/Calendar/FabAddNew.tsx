@@ -9,7 +9,7 @@ import { addHours } from "date-fns";
 
 const FabAddNew = () => {
   const { openDateModal } = useUiStore();
-  const { setActiveEvent } = useCalendarStore();
+  const { setActiveEvent, startDeleteEvent, hasEventSelected } = useCalendarStore();
 
   const onClickAddButton = (e: any) => {
     e.preventDefault();
@@ -29,18 +29,7 @@ const FabAddNew = () => {
 
   const onClickDeleteButton = (e: any) => {
     e.preventDefault();
-    openDateModal();
-    setActiveEvent({
-      title: "",
-      notes: "",
-      start: new Date(),
-      end: addHours(new Date(), 1),
-      bgColor: 'green',
-      user: {
-        _id: "123",
-        name: "Rodrigo Catalan",
-      },
-    });
+    startDeleteEvent();
   };
   
 
@@ -60,6 +49,9 @@ const FabAddNew = () => {
       className={styles.delFab}
       color="error"
       aria-label="del"
+      style={{
+        display: hasEventSelected ? '' : 'none'
+      }}
     >
       <DeleteIcon />
     </Fab>
