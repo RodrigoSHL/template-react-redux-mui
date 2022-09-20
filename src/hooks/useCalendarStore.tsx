@@ -5,6 +5,7 @@ import {
   onUpdateNewEvent,
   onChangeStart,
   onChangeEnd,
+  onDeleteEvent,
 } from "../features/calendar/calendarSlice";
 import { onCloseDateModal } from "../features/ui/uiSlice";
 
@@ -17,7 +18,10 @@ export const useCalendarStore = () => {
     dispatch(onSetActiveEvent(calendarEvent));
   };
 
-  const saveDateEvent = (calendarObjectInfo: any) => {
+  const startSavingEvent = (calendarObjectInfo: any) => {
+    //TODO: go to backend
+
+    //if all ok 
     if (calendarObjectInfo._id) {
       dispatch(onUpdateNewEvent({ ...calendarObjectInfo }));
     } else {
@@ -26,6 +30,13 @@ export const useCalendarStore = () => {
       );
     }
     dispatch(onCloseDateModal());
+  };
+
+  const startDeleteEvent = () => {
+    //TODO: llegar al backend
+
+    
+    dispatch(onDeleteEvent());
   };
 
   const saveSelectedDateEvent = (calendarObjectInfo: any) => {
@@ -45,11 +56,13 @@ export const useCalendarStore = () => {
     events,
     activeEvent,
     onUpdateNewEvent,
+    hasEventSelected: !!activeEvent,
 
     //* Methods
     setActiveEvent,
-    saveDateEvent,
+    startSavingEvent,
     saveSelectedDateEvent,
+    startDeleteEvent,
     setStartHour,
     setEndHour,
   };
