@@ -4,7 +4,7 @@ import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { localizer, getMessages } from "../../helpers";
 import CalendarEvent from "./CalendarEvent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CalendarModal from "./CalendarModal";
 import { useUiStore } from "../../hooks/useUiStore";
 import { useCalendarStore } from "../../hooks/useCalendarStore";
@@ -12,7 +12,7 @@ import FabAddNew from "./FabAddNew";
 const today = new Date();
 
 const CalendarPage = () => {
-  const { events, setActiveEvent, saveSelectedDateEvent } = useCalendarStore();
+  const { events, setActiveEvent, saveSelectedDateEvent, startLoadingEvents } = useCalendarStore();
   const { isDateModalOpen, openDateModal, closeDateModal } = useUiStore();
   const [lastView, setLastView] = useState<any>(
     localStorage.getItem("lastView") || "week"
@@ -51,20 +51,20 @@ const CalendarPage = () => {
   const selectEvent = async (slotInfo: any) => {
     const { start, end } = slotInfo;
     const agendaInfoDragDrop = {
-      _id: new Date().getTime(),
-      title: "Title",
-      notes: "Nota",
+      title: "Event",
+      notes: "Write notes",
+      take: "",
       start: start,
       end: end,
-      bgColor: "#fafafa",
-      user: {
-        _id: "123",
-        name: "Rodrigo Catalan",
-      },
     };
-    console.log("agendaInfoDragDrop", agendaInfoDragDrop);
+    // console.log("agendaInfoDragDrop", agendaInfoDragDrop);
     await saveSelectedDateEvent(agendaInfoDragDrop);
   };
+
+  useEffect(() => {
+    startLoadingEvents()
+  }, [])
+  
 
   return (
     <>
