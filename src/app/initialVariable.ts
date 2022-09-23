@@ -1,16 +1,17 @@
-import { addHours } from "date-fns";
 import { warningColor } from "../components/Middleware/Snackbar";
 import { IPokemonInfo } from "../interfaces/IPokeApi.interface";
+import { IUserSession } from "../interfaces/IUserSession.interface";
 
 /* Auth */
+const userSessionObject: IUserSession = {};
+
 export const initialStateAuth = {
   status: "checking", //'authenticated' - 'not-authenticated'
-  user: {},
+  user: userSessionObject,
   errorMessage: undefined,
 };
 
 /* Calendar */
-
 const activeEventObject: any = null;
 
 export const initialStateCalendar = {
@@ -43,7 +44,6 @@ export const initialStatePokeapi = {
 };
 
 /* Snackbar */
-
 export const initialStateSetSnackbar = {
   isOpen: false,
   message: "",
