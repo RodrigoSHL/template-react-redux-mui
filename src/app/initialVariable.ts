@@ -10,23 +10,12 @@ export const initialStateAuth = {
 };
 
 /* Calendar */
-const tempEventObject = {
-  _id: '1313',
-  title: "Happy Birthday Boss",
-  notes: "Have to make the pastel ",
-  start: new Date(),
-  end: addHours(new Date(), 1),
-  bgColor: "#f50057",
-  user: {
-    _id: "123",
-    name: "Rodrigo Catalan",
-  },
-};
 
-const activeEventObject: any = {}
+const activeEventObject: any = null;
 
 export const initialStateCalendar = {
-  events: [tempEventObject],
+  isLoadingEvents: true,
+  events: [],
   activeEvent: activeEventObject,
 };
 
