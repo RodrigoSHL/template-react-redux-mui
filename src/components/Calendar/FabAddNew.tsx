@@ -18,12 +18,7 @@ const FabAddNew = () => {
       title: "",
       notes: "",
       start: new Date(),
-      end: addHours(new Date(), 1),
-      bgColor: 'green',
-      user: {
-        _id: "123",
-        name: "Rodrigo Catalan",
-      },
+      end: addHours(new Date(), 1)
     });
   };
 
