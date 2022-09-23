@@ -1,3 +1,4 @@
+import calendarApi from "../api/calendarApi";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   onAddNewEvent,
@@ -6,11 +7,14 @@ import {
   onChangeStart,
   onChangeEnd,
   onDeleteEvent,
+  onLoadEvents,
 } from "../features/calendar/calendarSlice";
 import { onCloseDateModal } from "../features/ui/uiSlice";
+import { convertEventsToDateEvents } from "../helpers";
 
 export const useCalendarStore = () => {
   const { events, activeEvent } = useAppSelector((state) => state.calendar);
+  const { user } = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
 
@@ -18,29 +22,32 @@ export const useCalendarStore = () => {
     dispatch(onSetActiveEvent(calendarEvent));
   };
 
-  const startSavingEvent = (calendarObjectInfo: any) => {
-    //TODO: go to backend
-
-    //if all ok 
+  const startSavingEvent = async (calendarObjectInfo: any) => {
     if (calendarObjectInfo._id) {
-      dispatch(onUpdateNewEvent({ ...calendarObjectInfo }));
-    } else {
-      dispatch(
-        onAddNewEvent({ ...calendarObjectInfo, _id: new Date().getTime() })
+      //update
+      await calendarApi.patch(
+        `event/${calendarObjectInfo._id}`,
+        calendarObjectInfo
       );
+      dispatch(onUpdateNewEvent({ ...calendarObjectInfo, user }));
+    } else {
+      //create
+      const { data } = await calendarApi.post("event", calendarObjectInfo);
+      console.log("data", { data });
+      dispatch(onAddNewEvent({ ...calendarObjectInfo, _id: data._id, user }));
     }
     dispatch(onCloseDateModal());
   };
 
   const startDeleteEvent = () => {
-    //TODO: llegar al backend
-
-    
+    //TODO: go to backend
     dispatch(onDeleteEvent());
   };
 
-  const saveSelectedDateEvent = (calendarObjectInfo: any) => {
-    dispatch(onAddNewEvent({ ...calendarObjectInfo }));
+  const saveSelectedDateEvent = async (calendarObjectInfo: any) => {
+    const { data } = await calendarApi.post("event", calendarObjectInfo);
+    console.log("data", { data });
+    dispatch(onAddNewEvent({ ...calendarObjectInfo, _id: data._id, user }));
   };
 
   const setStartHour = (startHour: any) => {
@@ -51,19 +58,31 @@ export const useCalendarStore = () => {
     dispatch(onChangeEnd(endHour));
   };
 
+  const startLoadingEvents = async () => {
+    try {
+      const { data } = await calendarApi.get("event");
+      const events = convertEventsToDateEvents(data);
+      dispatch(onLoadEvents(events));
+    } catch (error) {
+      console.log("Error, loading events...");
+      console.log(error);
+    }
+  };
+
   return {
     //* Properties
-    events,
     activeEvent,
-    onUpdateNewEvent,
+    events,
     hasEventSelected: !!activeEvent,
+    onUpdateNewEvent,
 
     //* Methods
-    setActiveEvent,
-    startSavingEvent,
     saveSelectedDateEvent,
-    startDeleteEvent,
-    setStartHour,
+    setActiveEvent,
     setEndHour,
+    setStartHour,
+    startDeleteEvent,
+    startLoadingEvents,
+    startSavingEvent,
   };
 };
