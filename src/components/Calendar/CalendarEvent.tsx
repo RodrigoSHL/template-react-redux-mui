@@ -3,7 +3,7 @@ const CalendarEvent = ({ event }: any) => {
   return (
     <>
       <strong>{title}</strong>
-      <span> - {user.name}</span>
+      <span> - {user?.name}</span>
     </>
   );
 };
