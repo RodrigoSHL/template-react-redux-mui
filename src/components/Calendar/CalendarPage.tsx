@@ -12,7 +12,7 @@ import FabAddNew from "./FabAddNew";
 const today = new Date();
 
 const CalendarPage = () => {
-  const { events, setActiveEvent, saveSelectedDateEvent, startLoadingEvents } = useCalendarStore();
+  const { events, setActiveEvent, saveSelectedDateEvent, startLoadingEventsByUserId } = useCalendarStore();
   const { isDateModalOpen, openDateModal, closeDateModal } = useUiStore();
   const [lastView, setLastView] = useState<any>(
     localStorage.getItem("lastView") || "week"
@@ -51,18 +51,20 @@ const CalendarPage = () => {
   const selectEvent = async (slotInfo: any) => {
     const { start, end } = slotInfo;
     const agendaInfoDragDrop = {
-      title: "Event",
+      title: "Available time",
       notes: "Write notes",
       take: "",
+      clientEmail: "some@some.cl",
+      clientPhone: "+569 99999999",
       start: start,
       end: end,
+      color: 'info'
     };
-    // console.log("agendaInfoDragDrop", agendaInfoDragDrop);
     await saveSelectedDateEvent(agendaInfoDragDrop);
   };
 
   useEffect(() => {
-    startLoadingEvents()
+    startLoadingEventsByUserId()
   }, [])
   
 
@@ -98,6 +100,14 @@ const CalendarPage = () => {
                   today.getMonth(),
                   today.getDate(),
                   8
+                )
+              }
+              max={
+                new Date(
+                  today.getFullYear(),
+                  today.getMonth(),
+                  today.getDate(),
+                  23
                 )
               }
             />
