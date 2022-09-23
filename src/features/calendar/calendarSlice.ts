@@ -9,23 +9,14 @@ export const calendarSlice = createSlice({
   name: types.calendarType,
   initialState: { ...initialStateCalendar },
   reducers: {
-    onSetActiveEvent: (
-      state: any = initialStateCalendar,
-      action: PayloadAction<any>
-    ) => {
+    onSetActiveEvent: (state: any = initialStateCalendar, action: PayloadAction<any> ) => {
       state.activeEvent = action.payload;
     },
-    onAddNewEvent: (
-      state: any = initialStateCalendar,
-      action: PayloadAction<any>
-    ) => {
+    onAddNewEvent: ( state: any = initialStateCalendar, action: PayloadAction<any> ) => {
       state.events.push(action.payload);
       state.activeEvent = action.payload;
     },
-    onUpdateNewEvent: (
-      state: any = initialStateCalendar,
-      { payload }: PayloadAction<any>
-    ) => {
+    onUpdateNewEvent: ( state: any = initialStateCalendar, { payload }: PayloadAction<any> ) => {
       state.events = state.events.map((event: any) => {
         if (event._id === payload._id) {
           return payload;
@@ -33,47 +24,45 @@ export const calendarSlice = createSlice({
         return event;
       });
     },
-    onChangeStart: (
-      state: any = initialStateCalendar,
-      { payload }: PayloadAction<any>
-    ) => {
+    onChangeStart: ( state: any = initialStateCalendar, { payload }: PayloadAction<any> ) => {
       state.activeEvent.start = payload.start;
     },
-    onChangeEnd: (
-      state: any = initialStateCalendar,
-      { payload }: PayloadAction<any>
-    ) => {
+    onChangeEnd: ( state: any = initialStateCalendar, { payload }: PayloadAction<any> ) => {
       state.activeEvent.end = payload.end;
     },
     onDeleteEvent: (state: any = initialStateCalendar) => {
       if (state.activeEvent) {
-        state.events = state.events.filter(
-          (event: any) => event._id !== state.activeEvent._id
-        );
+        state.events = state.events.filter((event: any) => event._id !== state.activeEvent._id);
         state.activeEvent = null;
       }
     },
-    onLoadEvents: (state:any = initialStateCalendar, action: PayloadAction<any[]>) => {
+    onLoadEvents: (state: any = initialStateCalendar, { payload }: PayloadAction<any[]>) => {
       state.isLoadingEvents = false;
-      action.payload.forEach( event => {
-        const exists = state.events.some( (dbEvent: { id: any; }) => dbEvent.id === event._id);
-        if( !exists ) {
-          state.events.push(event)
+      payload.forEach((event) => {
+        const exists = state.events.some((dbEvent: { id: any }) => dbEvent.id === event._id);
+        if (!exists) {
+          state.events.push(event);
         }
-      })
-    }
+      });
+    },
+    onLogoutCalendar: (state: any = initialStateCalendar) => {
+      state.isLoadingEvents = true;
+      state.events = [];
+      state.activeEvent = null;
+    },
   },
 });
 
 // ACTION
 export const {
-  onSetActiveEvent,
   onAddNewEvent,
-  onUpdateNewEvent,
-  onChangeStart,
   onChangeEnd,
+  onChangeStart,
   onDeleteEvent,
   onLoadEvents,
+  onLogoutCalendar,
+  onSetActiveEvent,
+  onUpdateNewEvent,
 } = calendarSlice.actions;
 
 // STATE-REDUCER
