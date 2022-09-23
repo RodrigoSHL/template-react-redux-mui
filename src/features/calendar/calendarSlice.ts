@@ -53,6 +53,15 @@ export const calendarSlice = createSlice({
         state.activeEvent = null;
       }
     },
+    onLoadEvents: (state:any = initialStateCalendar, action: PayloadAction<any[]>) => {
+      state.isLoadingEvents = false;
+      action.payload.forEach( event => {
+        const exists = state.events.some( (dbEvent: { id: any; }) => dbEvent.id === event._id);
+        if( !exists ) {
+          state.events.push(event)
+        }
+      })
+    }
   },
 });
 
@@ -64,6 +73,7 @@ export const {
   onChangeStart,
   onChangeEnd,
   onDeleteEvent,
+  onLoadEvents,
 } = calendarSlice.actions;
 
 // STATE-REDUCER
