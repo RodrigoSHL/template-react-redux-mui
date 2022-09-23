@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../components/Auth/Login";
 import Calendar from "../components/Calendar/CalendarPage";
@@ -29,6 +29,7 @@ const Navigation = () => {
         {status === "not-authenticated" ? (
           <>
             <Route path="/calendar" element={<CalendarPublic />} />
+            <Route path="/calendar/:id" element={<CalendarPublic />} />
             <Route path="/login" element={<Login />} />
             <Route path="/*" element={<Navigate to="/calendar" />} />
           </>
