@@ -7,6 +7,7 @@ import {
   onLogin,
   onLogout,
 } from "../features/auth/authSlice";
+import { onLogoutCalendar } from "../features/calendar/calendarSlice";
 import { setOpenSnackbar } from "../features/snackbar/snackbarSlice";
 import { IUserLogin } from "../interfaces/IUserLogin.interface";
 const objError = {isOpen: true,message: 'Problems with server',severity: errorColor,timeOut : 4000}
@@ -51,6 +52,7 @@ export const useAuthStore = () => {
 
   const startLogout = async () => {
     localStorage.clear();
+    dispatch(onLogoutCalendar());
     dispatch(onLogout('Closed'));
   }
 
