@@ -3,11 +3,8 @@ import { Button, Modal, Box, Grid, TextField, Typography } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import { addHours, differenceInSeconds } from "date-fns";
+import { addHours } from "date-fns";
 import { es } from "date-fns/locale";
-import { useAppDispatch } from "../../app/hooks";
-import { errorColor } from "../Middleware/Snackbar";
-import { openSnackbar } from "../../features/snackbar/snackbarSlice";
 import { useCalendarStore } from "../../hooks/useCalendarStore";
 
 const style = {
@@ -21,21 +18,13 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const dateError = {
-  isOpen: true,
-  message: "Fechas incorrectas",
-  severity: errorColor,
-  timeOut: 2000,
-};
 
 const CalendarModal = ({ openModal, handleCloseModal }: any) => {
-  const dispatch = useAppDispatch();
-  const { activeEvent, startSavingEvent, setStartHour, setEndHour } =
+  const { activeEvent, startTakingTimeByClient, setStartHour, setEndHour } =
     useCalendarStore();
   const [calendarObject, setCalendarObject] = useState<any>({
-    _id: "",
-    email: "",
-    phone: "",
+    clientEmail: "",
+    clientPhone: "",
     start: new Date(),
     end: addHours(new Date(), 1),
   });
@@ -58,26 +47,15 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
 
   const submitForm = async (e: any) => {
     e.preventDefault();
-    const difference = differenceInSeconds(valueEndDate, valueInitialDate);
-    if (isNaN(difference) || difference <= 0) {
-      dispatch(openSnackbar(dateError));
-      return;
-    }
-    if (calendarObject.email.length <= 0) return;
-    const agendaInfo = {
-      _id: activeEvent._id,
-      email: calendarObject.email,
-      phone: calendarObject.phone,
-      start: activeEvent ? activeEvent.start : valueInitialDate,
-      end: activeEvent ? activeEvent.end : valueEndDate,
-      bgColor: "#fafafa",
-      user: {
-        _id: "123",
-        name: "Rodrigo Catalan",
-      },
+    if (calendarObject.clientEmail.length <= 0) return;
+    const takeTimeInfo = {
+      title: 'Not available',
+      clientEmail: calendarObject.clientEmail,
+      clientPhone: calendarObject.clientPhone,
+      take: true,
     };
-    console.log("agendaInfo", agendaInfo);
-    await startSavingEvent(agendaInfo);
+    console.log("takeTimeInfo", takeTimeInfo);
+    await startTakingTimeByClient(takeTimeInfo);
   };
 
   const [valueInitialDate, setValueInitialDate] = useState<Date>(new Date());
@@ -146,9 +124,8 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
                   label="Ingresar correo electrónico"
                   variant="outlined"
                   fullWidth
-                  name="email"
+                  name="clientEmail"
                   onChange={addDataInMemory}
-                  value={calendarObject.email}
                   required
                 />
               </Grid>
@@ -159,9 +136,8 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
                   variant="outlined"
                   fullWidth
                   required
-                  name="phone"
+                  name="clientPhone"
                   onChange={addDataInMemory}
-                  value={calendarObject.phone}
                 />
               </Grid>
               <Grid item xs={12}>
