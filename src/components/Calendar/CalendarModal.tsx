@@ -23,7 +23,7 @@ const style = {
 };
 const dateError = {
   isOpen: true,
-  message: "Fechas incorrectas",
+  message: "Incorrect dates",
   severity: errorColor,
   timeOut: 2000,
 };
@@ -65,18 +65,14 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
     }
     if (calendarObject.title.length <= 0) return;
     const agendaInfo = {
-      _id: activeEvent._id,
+      _id: activeEvent ? activeEvent._id : null,
       title: calendarObject.title,
       notes: calendarObject.notes,
+      take: "",
       start: activeEvent ? activeEvent.start : valueInitialDate,
       end: activeEvent ? activeEvent.end : valueEndDate,
-      bgColor: "#fafafa",
-      user: {
-        _id: "123",
-        name: "Rodrigo Catalan",
-      },
     };
-    console.log("agendaInfo", agendaInfo);
+    // console.log("agendaInfo", agendaInfo);
     await startSavingEvent(agendaInfo);
   };
 
@@ -139,7 +135,7 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
               <Grid item xs={12}>
                 <TextField
                   id="outlined-basic"
-                  label="Ingresar título"
+                  label="In title"
                   variant="outlined"
                   fullWidth
                   name="title"
@@ -151,7 +147,7 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
               <Grid item xs={12}>
                 <TextField
                   id="outlined-basic"
-                  label="Ingresar nota"
+                  label="In notes"
                   variant="outlined"
                   fullWidth
                   required
