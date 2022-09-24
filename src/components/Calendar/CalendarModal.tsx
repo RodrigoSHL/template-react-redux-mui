@@ -21,6 +21,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 const dateError = {
   isOpen: true,
   message: "Incorrect dates",
@@ -63,6 +64,7 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
       dispatch(openSnackbar(dateError));
       return;
     }
+  
     if (calendarObject.title.length <= 0) return;
     const agendaInfo = {
       _id: activeEvent ? activeEvent._id : null,
@@ -71,6 +73,9 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
       take: "",
       start: activeEvent ? activeEvent.start : valueInitialDate,
       end: activeEvent ? activeEvent.end : valueEndDate,
+      clientEmail: "some@some.cl",
+      clientPhone: "+569 99999999",
+      color: 'info'
     };
     // console.log("agendaInfo", agendaInfo);
     await startSavingEvent(agendaInfo);
