@@ -9,6 +9,7 @@ import CalendarModal from "./CalendarModal";
 import { useUiStore } from "../../hooks/useUiStore";
 import { useCalendarStore } from "../../hooks/useCalendarStore";
 import FabAddNew from "./FabAddNew";
+import FabShareCalendar from "./FabShareCalendar";
 const today = new Date();
 
 const CalendarPage = () => {
@@ -25,7 +26,7 @@ const CalendarPage = () => {
     isSelected: any
   ) => {
     const style = {
-      backgroundColor: "#347CF7",
+      backgroundColor: event.take ? "#00695f" : "#1976d2",
       borderRadius: "0px",
       opacity: 0.8,
       color: "white",
@@ -117,6 +118,7 @@ const CalendarPage = () => {
               handleOpenModal={openDateModal}
             />
             <FabAddNew />
+            <FabShareCalendar />
           </Box>
         </Box>
       </Container>
