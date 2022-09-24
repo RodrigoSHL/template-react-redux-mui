@@ -26,7 +26,7 @@ const CalendarPage = () => {
     isSelected: any
   ) => {
     const style = {
-      backgroundColor: event.take ? "#00695f" : "#1976d2",
+      backgroundColor: event.take ? "#9c27b0" : "#1976d2",
       borderRadius: "0px",
       opacity: 0.8,
       color: "white",
