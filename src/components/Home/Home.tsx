@@ -164,7 +164,7 @@ export default function MiniDrawer() {
             component="div"
             sx={{ flexGrow: 1, marginLeft: 1 }}
           >
-            LOGO
+            AtomDev
           </Typography>
           <ToggleSwitch />
           <CircleOptions />
