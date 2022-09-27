@@ -1,9 +1,9 @@
 const CalendarEvent = ({ event }: any) => {
-  const { title, user } = event;
+  const { title } = event;
   return (
     <>
       <strong>{title}</strong>
-      <span> - {user?.name}</span>
+      {/* <span> - {user?.name}</span> */}
     </>
   );
 };
