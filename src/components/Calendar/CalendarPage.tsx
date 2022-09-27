@@ -1,15 +1,16 @@
-import { Container, Box } from "@mui/material";
-import styles from "./Calendar.module.css";
-import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { Calendar } from "react-big-calendar";
+import { Container, Box } from "@mui/material";
 import { localizer, getMessages } from "../../helpers";
-import CalendarEvent from "./CalendarEvent";
-import { useEffect, useState } from "react";
-import CalendarModal from "./CalendarModal";
-import { useUiStore } from "../../hooks/useUiStore";
 import { useCalendarStore } from "../../hooks/useCalendarStore";
+import { useEffect, useState } from "react";
+import { useUiStore } from "../../hooks/useUiStore";
+import CalendarEvent from "./CalendarEvent";
+import CalendarModal from "./CalendarModal";
 import FabAddNew from "./FabAddNew";
 import FabShareCalendar from "./FabShareCalendar";
+import styles from "./Calendar.module.css";
+
 const today = new Date();
 
 const CalendarPage = () => {
@@ -26,10 +27,10 @@ const CalendarPage = () => {
     isSelected: any
   ) => {
     const style = {
-      backgroundColor: event.take ? "#9c27b0" : "#1976d2",
+      backgroundColor: event.color,
       borderRadius: "0px",
       opacity: 0.8,
-      color: "white",
+      color: event.color !== "#ffeb3b" ? "white" : "black",
     };
     return { style };
   };
@@ -54,12 +55,12 @@ const CalendarPage = () => {
     const agendaInfoDragDrop = {
       title: "Available time",
       notes: "Write notes",
-      take: "",
+      take: false,
       clientEmail: "some@some.cl",
       clientPhone: "+569 99999999",
       start: start,
       end: end,
-      color: 'info'
+      color: "#2196f3"
     };
     await saveSelectedDateEvent(agendaInfoDragDrop);
   };
