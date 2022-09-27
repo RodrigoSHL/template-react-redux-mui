@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
-import { Button, Modal, Box, Grid, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Modal,
+  Box,
+  Grid,
+  TextField,
+  Typography,
+  FormControlLabel,
+  Switch,
+} from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -9,6 +18,7 @@ import { useAppDispatch } from "../../app/hooks";
 import { errorColor } from "../Middleware/Snackbar";
 import { openSnackbar } from "../../features/snackbar/snackbarSlice";
 import { useCalendarStore } from "../../hooks/useCalendarStore";
+import CalendarModalColor from "./CalendarModalColor";
 
 const style = {
   position: "absolute" as "absolute",
@@ -37,6 +47,7 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
     _id: "",
     title: "",
     notes: "",
+    take: false,
     start: new Date(),
     end: addHours(new Date(), 1),
   });
@@ -49,7 +60,7 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
 
   const [updateState, setUpdateState] = useState(false);
 
-  const addDataInMemory = (e: any) => {
+  const addDataInMemory = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setCalendarObject((prev: any) => ({
       ...prev,
@@ -57,27 +68,27 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
     }));
   };
 
-  const submitForm = async (e: any) => {
+  const submitForm = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const difference = differenceInSeconds(valueEndDate, valueInitialDate);
     if (isNaN(difference) || difference <= 0) {
       dispatch(openSnackbar(dateError));
       return;
     }
-  
+
     if (calendarObject.title.length <= 0) return;
     const agendaInfo = {
       _id: activeEvent ? activeEvent._id : null,
       title: calendarObject.title,
       notes: calendarObject.notes,
-      take: "",
+      take: checked,
       start: activeEvent ? activeEvent.start : valueInitialDate,
       end: activeEvent ? activeEvent.end : valueEndDate,
       clientEmail: "some@some.cl",
       clientPhone: "+569 99999999",
-      color: 'info'
+      color: color,
     };
-    // console.log("agendaInfo", agendaInfo);
+    console.log("agendaInfo", agendaInfo);
     await startSavingEvent(agendaInfo);
   };
 
@@ -86,6 +97,14 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
   const [valueEndDate, setValueEndDate] = useState<Date>(
     addHours(new Date(), 1)
   );
+
+  const [checked, setChecked] = useState(activeEvent ? activeEvent.take : false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(e.target.checked);
+  };
+
+  const [color, setColor] = useState(activeEvent ? activeEvent.color : "#2196f3");
 
   return (
     <>
@@ -137,10 +156,10 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
                 </LocalizationProvider>
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={9}>
                 <TextField
                   id="outlined-basic"
-                  label="In title"
+                  label="Title"
                   variant="outlined"
                   fullWidth
                   name="title"
@@ -149,10 +168,24 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
                   required
                 />
               </Grid>
+
+              <Grid item xs={3}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={checked}
+                      onChange={handleChange}
+                      inputProps={{ "aria-label": "controlled" }}
+                    />
+                  }
+                  label="Take"
+                />
+              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   id="outlined-basic"
-                  label="In notes"
+                  label="Notes"
                   variant="outlined"
                   fullWidth
                   required
@@ -160,10 +193,15 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
                   onChange={addDataInMemory}
                   value={calendarObject.notes}
                   multiline
-                  rows={4}
-                  maxRows={5}
+                  rows={6}
+                  maxRows={7}
                 />
               </Grid>
+
+              <Grid item xs={12}>
+                <CalendarModalColor color={color} setColor={setColor} />
+              </Grid>
+
               <Grid item xs={12}>
                 {updateState ? (
                   <Button
