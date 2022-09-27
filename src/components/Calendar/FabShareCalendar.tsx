@@ -5,7 +5,7 @@ import { useAuthStore } from "../../hooks/useAuthStore";
 import { useAppDispatch } from "../../app/hooks";
 import { setOpenSnackbar } from "../../features/snackbar/snackbarSlice";
 import { infoColor } from "../Middleware/Snackbar";
-const objSuccess = {isOpen: true, message: 'link copied successfully', severity: infoColor, timeOut : 2000}
+const objSuccess = {isOpen: true, message: 'Copied', severity: infoColor, timeOut : 2000}
 
 const FabShareCalendar = () => {
 
