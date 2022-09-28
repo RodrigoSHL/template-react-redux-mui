@@ -178,7 +178,7 @@ const CalendarModal = ({ openModal, handleCloseModal }: any) => {
                       inputProps={{ "aria-label": "controlled" }}
                     />
                   }
-                  label="Take"
+                  label="Taken"
                 />
               </Grid>
 
