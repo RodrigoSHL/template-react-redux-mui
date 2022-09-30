@@ -23,15 +23,19 @@ export const authSlice = createSlice({
       state.status = "not-authenticated"; //'authenticated' - 'not-authenticated'
       state.user = {};
       state.errorMessage = action.payload;
+      state.isAdmin = false;
     },
     clearErrorMessage: (state: any = initialStateAuth) => {
       state.errorMessage = undefined;
     },
-  },
+    onCheckAdmin: (state: any = initialStateAuth, action: PayloadAction<any>) => {
+      state.isAdmin = action.payload;
+    }
+    },
 });
 
 // ACTION
-export const { onChecking, onLogin, onLogout, clearErrorMessage } = authSlice.actions;
+export const { onCheckAdmin, onChecking, onLogin, onLogout, clearErrorMessage } = authSlice.actions;
 
 // STATE-REDUCER
 export const selectAuth = (state: RootState) => state.auth;
