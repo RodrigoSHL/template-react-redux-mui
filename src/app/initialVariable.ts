@@ -3,12 +3,19 @@ import { IPokemonInfo } from "../interfaces/IPokeApi.interface";
 import { IUserSession } from "../interfaces/IUserSession.interface";
 
 /* Auth */
-const userSessionObject: IUserSession = {};
+const userSessionObject: IUserSession = {
+  name: "",
+  uid: "",
+  roles: [],
+
+};
 
 export const initialStateAuth = {
   status: "checking", //'authenticated' - 'not-authenticated'
   user: userSessionObject,
   errorMessage: undefined,
+  isSuper: false,
+  isAdmin: false,
 };
 
 /* Calendar */
