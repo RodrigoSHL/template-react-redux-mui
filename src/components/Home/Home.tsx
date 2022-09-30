@@ -100,7 +100,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MiniDrawer() {
-  const { status, checkAuthToken } = useAuthStore();
+  const { status, isAdmin, checkAuthToken } = useAuthStore();
 
   let navigate = useNavigate();
   const theme = useTheme();
@@ -113,7 +113,8 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const itemsList = [
+
+  const itemsAdminList = [
     {
       text: "Counter",
       icon: <AvTimerIcon />,
@@ -140,6 +141,23 @@ export default function MiniDrawer() {
       onClick: () => navigate("/calendar"),
     },
   ];
+
+  const itemsInternalUserList = [
+    {
+      text: "Calendar",
+      icon: <CalendarIcon />,
+      onClick: () => navigate("/calendar"),
+    },
+  ];
+
+  const itemsExternalUserList = [
+    {
+      text: "Cancel Time",
+      icon: <CalendarIcon />,
+      onClick: () => navigate("/cancel"),
+    },
+  ];
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -183,8 +201,34 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         {status === "authenticated" ? (
+          isAdmin ? (
+            <List>
+              {itemsAdminList.map((item, index) => {
+                const { text, icon, onClick } = item;
+                return (
+                  <ListItem button key={text} onClick={onClick}>
+                    {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                    <ListItemText primary={text} />
+                  </ListItem>
+                );
+              })}
+            </List>
+          ) : (
+            <List>
+              {itemsInternalUserList.map((item, index) => {
+                const { text, icon, onClick } = item;
+                return (
+                  <ListItem button key={text} onClick={onClick}>
+                    {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                    <ListItemText primary={text} />
+                  </ListItem>
+                );
+              })}
+            </List>
+          )
+        ) : (
           <List>
-            {itemsList.map((item, index) => {
+            {itemsExternalUserList.map((item, index) => {
               const { text, icon, onClick } = item;
               return (
                 <ListItem button key={text} onClick={onClick}>
@@ -194,8 +238,6 @@ export default function MiniDrawer() {
               );
             })}
           </List>
-        ) : (
-          ""
         )}
       </Drawer>
 
