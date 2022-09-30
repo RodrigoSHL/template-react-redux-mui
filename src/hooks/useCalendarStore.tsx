@@ -14,6 +14,7 @@ import { setOpenSnackbar } from "../features/snackbar/snackbarSlice";
 import { onCloseDateModal } from "../features/ui/uiSlice";
 import { convertEventsToDateEvents } from "../helpers";
 import { IClientTakeTime } from "../interfaces/IClientTakeTime.interface";
+
 const objError = {
   isOpen: true,
   message: "Problems with server",
@@ -28,11 +29,18 @@ const objDeleteSuccess = {
   timeOut: 2000,
 };
 
-const objTakeSucces = {
+const objTakeSuccess = {
   isOpen: true,
   message: "The time was taken successfully",
   severity: successColor,
   timeOut: 4000,
+};
+
+const objUpdatedSuccess = {
+  isOpen: true,
+  message: "The time was updated successfully",
+  severity: successColor,
+  timeOut: 2000,
 };
 
 export const useCalendarStore = () => {
@@ -45,12 +53,15 @@ export const useCalendarStore = () => {
     dispatch(onSetActiveEvent(calendarEvent));
   };
 
+  
+
   const startSavingEvent = async (calendarObjectInfo: any) => {
     try {
       if (calendarObjectInfo._id) {
         //update
         await calendarApi.patch(`event/${calendarObjectInfo._id}`, calendarObjectInfo);
         dispatch(onUpdateNewEvent({ ...calendarObjectInfo, user }));
+        dispatch(setOpenSnackbar(objUpdatedSuccess))
         return;
       }
       //create
@@ -112,7 +123,6 @@ export const useCalendarStore = () => {
   };
 
   const startLoadingEventsByUrlId = async ( id: any ) => {
-    console.log('user', user)
     try {
       const { data } = await calendarApi.get(`event/user/${id}`);
       const events = convertEventsToDateEvents(data);
@@ -127,7 +137,7 @@ export const useCalendarStore = () => {
     try {
       await calendarApi.patch(`event/take/${activeEvent._id}`, clientTakeTime);
       dispatch(onUpdateNewEvent({ ...activeEvent, take: true, title: clientTakeTime.title }));
-      dispatch(setOpenSnackbar(objTakeSucces))
+      dispatch(setOpenSnackbar(objTakeSuccess))
       dispatch(onCloseDateModal());
       return;
     } catch (error) {
