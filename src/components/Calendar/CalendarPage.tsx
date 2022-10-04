@@ -30,7 +30,7 @@ const CalendarPage = () => {
       backgroundColor: event.color,
       borderRadius: "0px",
       opacity: 0.8,
-      color: event.color !== "#ffeb3b" ? "white" : "black",
+      color: event.color !== "#ffeb3b" ? "white" : "#393d42",
     };
     return { style };
   };
