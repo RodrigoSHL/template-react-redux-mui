@@ -5,6 +5,7 @@ import Calendar from "../components/Calendar/CalendarPage";
 import CalendarPublic from "../components/CalendarPublic/CalendarPublicPage";
 import { Counter } from "../components/Counter/Counter";
 import Crud from "../components/Crud/Crud";
+import Enjoy from "../components/Enjoy/Enjoy";
 import Pokeapi from "../components/Pokeapi/Pokeapi";
 import TestComponent from "../components/TestComponent/TestComponent";
 import { useAuthStore } from "../hooks/useAuthStore";
@@ -17,21 +18,20 @@ const Navigation = () => {
     checkAuthToken();
   }, []);
 
-  if ( status === 'checking' ) {
-    return (
-        <h3>Cargando...</h3>
-    )
-}
+  if (status === "checking") {
+    return <h3>Cargando...</h3>;
+  }
 
   return (
     <>
       <Routes>
         {status === "not-authenticated" ? (
           <>
+            <Route path="/enjoy" element={<Enjoy />} />
             <Route path="/calendar" element={<CalendarPublic />} />
             <Route path="/calendar/:id" element={<CalendarPublic />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/*" element={<Navigate to="/calendar" />} />
+            <Route path="/*" element={<Navigate to="/enjoy" />} />
           </>
         ) : (
           <>
